@@ -2,15 +2,16 @@
  * @Author: yjl
  * @Date: 2024-04-19 11:49:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-19 12:09:43
+ * @LastEditTime: 2024-04-19 17:28:57
  * @Description: 描述
  */
 import { useState } from "react";
 import Menu from "@/components/Menu/index";
 import { Layout, Avatar, theme } from "antd";
 import headerImg from "@/assets/images/header.jpg";
-
+import Breadcrumb from "@/components/Breadcrumb/index";
 import Routers from "@/router/index";
+import { Outlet } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
 const { Header, Sider, Content } = Layout;
@@ -24,7 +25,7 @@ export default function Index() {
     <>
       <Layout className="w-100% !h-100%">
         <Sider trigger={null} collapsible collapsed={collapsed}>
-            <div className=" h-32px bg-[rgba(255,255,255,.2)] b-rd-6px m-16px"></div>
+          <div className=" h-32px bg-[rgba(255,255,255,.2)] b-rd-6px m-16px"></div>
           <Menu />
         </Sider>
         <Layout className="site-layout">
@@ -32,7 +33,10 @@ export default function Index() {
             className="flex !items-center justify-between"
             style={{ padding: 0, background: colorBgContainer }}
           >
-            <div onClick={() => setCollapsed(!collapsed)} className="cursor-pointer">
+            <div
+              onClick={() => setCollapsed(!collapsed)}
+              className="cursor-pointer"
+            >
               {collapsed ? (
                 <MenuUnfoldOutlined className="text-20px m-l-16px" />
               ) : (
@@ -41,8 +45,9 @@ export default function Index() {
             </div>
             <Avatar className="m-r-24px" src={headerImg} />
           </Header>
+          <Breadcrumb />
           <Content
-            className="p-24px m-y-24px m-x-16px min-h-280px"
+            className="p-24px m-y-24px m-t-0px m-x-16px min-h-280px"
             style={{
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
@@ -50,6 +55,7 @@ export default function Index() {
           >
             <div className="w-100% h-100% ">
               <Routers />
+              <Outlet />
             </div>
           </Content>
         </Layout>
