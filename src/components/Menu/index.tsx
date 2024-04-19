@@ -2,21 +2,13 @@
  * @Author: yjl
  * @Date: 2024-04-18 16:16:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-18 18:04:30
+ * @LastEditTime: 2024-04-19 11:51:15
  * @Description: 描述
  */
 import { Menu } from "antd";
-import { Link } from "react-router-dom";
-
-const routers = [
-  {
-    path: "/home",
-    name: "Home",
-    meta: {
-      title: "首页",
-    },
-  },
-];
+import { Link, useLocation } from "react-router-dom";
+import { routerList } from "@/router/index";
+import { useState } from "react";
 
 function generateMenu(routers: any) {
   return routers.map((router) => {
@@ -39,5 +31,24 @@ function generateMenu(routers: any) {
 }
 
 export default function MenuComponent() {
-  return <Menu mode="inline">{generateMenu(routers)}</Menu>;
+  const location = useLocation();
+  console.log(location);
+
+  const [selectedKeys, setSelectKeys] = useState([
+    location.pathname || routerList[0].path || "/home",
+  ]);
+  console.log("openKeys", selectedKeys);
+  function menuSelect({ key }) {
+    setSelectKeys([key]);
+  }
+  return (
+    <Menu
+      mode="inline"
+      theme="dark"
+      onSelect={menuSelect}
+      selectedKeys={selectedKeys}
+    >
+      {generateMenu(routerList)}
+    </Menu>
+  );
 }
