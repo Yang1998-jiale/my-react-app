@@ -2,28 +2,25 @@
  * @Author: yjl
  * @Date: 2024-04-19 09:52:45
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-22 10:35:32
+ * @LastEditTime: 2024-04-22 16:22:58
  * @Description: 描述
  */
-import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Button } from "antd";
 
 export default function Index() {
-  const [state, setState] = useState({
-    message: "index",
-    count: 1,
-  });
   const location = useLocation();
+  const navigate = useNavigate();
   return (
     <>
       {location.pathname !== "/study/index" ? (
         <Outlet />
       ) : (
-        <div
-          className="w-100% h-100% cursor-pointer"
-          onClick={() => setState({ ...state, count: state.count + 1 })}
-        >
-          {state.message + state.count}
+        <div className="w-100% h-100% cursor-pointer">
+          我是study/index页面
+          <Button onClick={() => navigate("/study/index/home")}>
+            查看详情
+          </Button>
         </div>
       )}
     </>

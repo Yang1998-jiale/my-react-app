@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-19 11:49:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-19 17:28:57
+ * @LastEditTime: 2024-04-22 16:17:33
  * @Description: 描述
  */
 import { useState } from "react";
@@ -11,21 +11,32 @@ import { Layout, Avatar, theme } from "antd";
 import headerImg from "@/assets/images/header.jpg";
 import Breadcrumb from "@/components/Breadcrumb/index";
 import Routers from "@/router/index";
-import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import Logo from "@/assets/logo.png";
 
 const { Header, Sider, Content } = Layout;
+
+const title = import.meta.env.VITE_APP_TITLE;
 
 export default function Index() {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const navigate = useNavigate();
+
   return (
     <>
       <Layout className="w-100% !h-100%">
         <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className=" h-32px bg-[rgba(255,255,255,.2)] b-rd-6px m-16px"></div>
+          <div
+            className="flex items-center m-16px cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            <img src={Logo} className="w-36px h-36px b-rd-50%" alt="" />
+            <div className="c-#fff m-l-8px text-18px font-600">{title}</div>
+          </div>
           <Menu />
         </Sider>
         <Layout className="site-layout">
@@ -55,7 +66,6 @@ export default function Index() {
           >
             <div className="w-100% h-100% ">
               <Routers />
-              <Outlet />
             </div>
           </Content>
         </Layout>

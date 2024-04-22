@@ -2,13 +2,12 @@
  * @Author: yjl
  * @Date: 2024-04-19 09:32:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-22 11:27:40
+ * @LastEditTime: 2024-04-22 16:35:54
  * @Description: 描述
  */
-
-
-import Study from "@/views/study/index";
-import Home from "@/views/home/index";
+import { lazy } from "react";
+const Study = lazy(() => import("@/views/study/index"));
+const StudyIndex = lazy(() => import("@/views/home/index"));
 
 const study: any[] = [
   {
@@ -34,10 +33,11 @@ const study: any[] = [
             caseSensitive: true,
 
             index: true,
-            element: <Home />,
+            element: <StudyIndex />,
             meta: {
               isShow: true, //当前路由是否显示
               title: "详情",
+              currentActive: "/study/index",
             },
           },
         ],

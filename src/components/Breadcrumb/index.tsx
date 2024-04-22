@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-19 16:11:54
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-19 17:44:02
+ * @LastEditTime: 2024-04-22 15:41:56
  * @Description: 描述
  */
 
@@ -23,7 +23,10 @@ function findRouter(target, routers) {
     }
     if (routerTarge[index - 1]) {
       const p = routerTarge[index - 1];
-      routerTarge.push(p.children.find((f) => f.path === item));
+      if (p.children?.find((f) => f.path === item)) {
+        routerTarge.push(p.children?.find((f) => f.path === item));
+      }
+
       return;
     }
   });
@@ -37,17 +40,17 @@ function findRouter(target, routers) {
 
 export default function Index() {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const routerActives = findRouter(location.pathname, routerList);
   function itemRender(currentRoute, params, items, paths) {
-    console.log(currentRoute, params, items, paths);
+    // console.log(currentRoute, params, items, paths);
 
     const isLast = currentRoute?.meta?.noBread;
 
     return isLast ? (
       <span>{currentRoute.title}</span>
     ) : (
-      <Link to={`/${paths.at(-1)}`}>{currentRoute.title }</Link>
+      <Link to={`/${paths.at(-1)}`}>{currentRoute.title}</Link>
     );
   }
 

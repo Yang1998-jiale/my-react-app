@@ -2,13 +2,13 @@
  * @Author: yjl
  * @Date: 2024-04-18 16:16:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-19 17:25:23
+ * @LastEditTime: 2024-04-22 16:49:35
  * @Description: 描述
  */
 import { Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import { routerList } from "@/router/index";
-import { useState } from "react";
+import { routerList, routerFlatList } from "@/router/index";
+import React, { useState, useEffect } from "react";
 
 function generateMenu(routers: any) {
   return routers.map((router) => {
@@ -39,13 +39,30 @@ function generateMenu(routers: any) {
   });
 }
 
-export default function MenuComponent() {
+function findRouter(target) {
+  return routerFlatList.find((item) => item.path === target);
+}
+
+function MenuComponent() {
   const location = useLocation();
   const [selectedKeys, setSelectKeys] = useState([
     location.pathname || routerList[0].path || "/home",
   ]);
-  const openKeys = ["/" + selectedKeys[0].split("/")[1]];
-  console.log(openKeys);
+
+  const [openKeys, setOpenKeys] = useState([
+    "/" + selectedKeys[0].split("/")[1],
+  ]);
+  // console.log(selectedKeys);
+  useEffect(() => {
+    const findRoute = findRouter(location.pathname);
+    if (findRoute?.meta?.currentActive) {
+      setSelectKeys([findRoute.meta.currentActive]);
+      setOpenKeys(["/" + findRoute.meta.currentActive.split("/")[1]]);
+      return;
+    }
+    setSelectKeys([location.pathname]);
+    setOpenKeys(["/" + location.pathname.split("/")[1]]);
+  }, [location.pathname]);
 
   function menuSelect({ key }) {
     setSelectKeys([key]);
@@ -55,6 +72,8 @@ export default function MenuComponent() {
       mode="inline"
       theme="dark"
       onSelect={menuSelect}
+      openKeys={openKeys}
+      onOpenChange={(Keys) => setOpenKeys(Keys)}
       defaultOpenKeys={openKeys}
       selectedKeys={selectedKeys}
     >
@@ -62,3 +81,4 @@ export default function MenuComponent() {
     </Menu>
   );
 }
+export default React.memo(MenuComponent);
