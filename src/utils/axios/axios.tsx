@@ -2,14 +2,16 @@
  * @Author: yjl
  * @Date: 2024-04-22 13:41:34
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-22 17:15:57
+ * @LastEditTime: 2024-04-23 10:06:37
  * @Description: 描述
  */
 import React from "react";
 import axios from "axios";
 import { Modal } from "antd";
 import { redirect } from "react-router-dom";
-const instance = axios.create({});
+const instance: any = axios.create({
+  baseURL: "",
+});
 // const navigate = useNavigate();
 let errorModal: any = false;
 
