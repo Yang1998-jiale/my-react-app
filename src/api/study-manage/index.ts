@@ -2,13 +2,14 @@
  * @Author: yjl
  * @Date: 2024-04-23 09:53:26
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-23 10:29:36
+ * @LastEditTime: 2024-04-24 12:10:45
  * @Description: 描述
  */
-import axios from "@/utils/axios/axios";
+import { defHttp } from "@/utils/axios/index";
 
 enum Api {
   Query_Study_List = "/QueryStudyList",
 }
 
-export const queryStudyList = (data) => axios.post(Api.Query_Study_List, data);
+export const queryStudyList = (data) =>
+  defHttp.post({ url: Api.Query_Study_List, data }, {});

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 16:16:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-22 16:49:35
+ * @LastEditTime: 2024-04-24 16:34:34
  * @Description: 描述
  */
 import { Menu } from "antd";
@@ -11,32 +11,34 @@ import { routerList, routerFlatList } from "@/router/index";
 import React, { useState, useEffect } from "react";
 
 function generateMenu(routers: any) {
-  return routers.map((router) => {
-    if (router.children) {
-      return router.meta?.isSub ? (
+  return routers
+    .sort((a, b) => a.order - b.order)
+    .map((router) => {
+      if (router.children) {
+        return router.meta?.isSub ? (
+          <Menu.Item key={router.path}>
+            <Link to={router.path}>
+              <span>{router.icon}</span>
+              <span>{router.meta.title}</span>
+            </Link>
+          </Menu.Item>
+        ) : (
+          <Menu.SubMenu key={router.path} title={router.meta.title}>
+            {generateMenu(router.children)}
+          </Menu.SubMenu>
+        );
+      }
+      return router.meta?.isShow ? (
+        1
+      ) : (
         <Menu.Item key={router.path}>
           <Link to={router.path}>
             <span>{router.icon}</span>
             <span>{router.meta.title}</span>
           </Link>
         </Menu.Item>
-      ) : (
-        <Menu.SubMenu key={router.path} title={router.meta.title}>
-          {generateMenu(router.children)}
-        </Menu.SubMenu>
       );
-    }
-    return router.meta?.isShow ? (
-      1
-    ) : (
-      <Menu.Item key={router.path}>
-        <Link to={router.path}>
-          <span>{router.icon}</span>
-          <span>{router.meta.title}</span>
-        </Link>
-      </Menu.Item>
-    );
-  });
+    });
 }
 
 function findRouter(target) {

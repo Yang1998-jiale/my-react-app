@@ -13,6 +13,7 @@ const study: any[] = [
   {
     path: "/study",
     caseSensitive: true,
+    order: 2,
     meta: {
       title: "学习",
       noBread: true, //是否可以点击切换面包屑

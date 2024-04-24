@@ -2,12 +2,13 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:52:15
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-22 16:32:44
+ * @LastEditTime: 2024-04-24 16:25:51
  * @Description: 描述
  */
 const modules = import.meta.glob("./modules/**/*.tsx", { eager: true });
 import { useRoutes, Navigate } from "react-router-dom";
 import NotPage from "@/components/Error/404";
+import Login from "@/components/Login/index";
 
 const routers: any = [];
 Object.keys(modules).forEach((key) => {
@@ -15,6 +16,8 @@ Object.keys(modules).forEach((key) => {
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   routers.push(...modList);
 });
+console.log(routers);
+
 function routerFlat(target, flat) {
   target.forEach((item) => {
     if (item.element) {
@@ -32,6 +35,24 @@ export const routerFlatList = routerFlat(routers, []);
 
 export const routerList = routers;
 
+export function CreateLoginRouter() {
+  const routes = useRoutes([
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/404",
+      element: <NotPage />,
+    },
+    {
+      path: "*",
+      element: <Navigate to="/404" replace />,
+    },
+  ]);
+  return routes;
+}
+
 export default function Routers() {
   const routes = useRoutes([
     {
@@ -39,6 +60,10 @@ export default function Routers() {
       element: <Navigate to={routers[0].path} />,
     },
     ...routers,
+    {
+      path: "/login",
+      element: <Login />,
+    },
     {
       path: "/404",
       element: <NotPage />,

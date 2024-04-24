@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-19 11:49:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-22 16:17:33
+ * @LastEditTime: 2024-04-24 15:07:41
  * @Description: 描述
  */
 import { useState } from "react";
@@ -11,7 +11,7 @@ import { Layout, Avatar, theme } from "antd";
 import headerImg from "@/assets/images/header.jpg";
 import Breadcrumb from "@/components/Breadcrumb/index";
 import Routers from "@/router/index";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Outlet } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Logo from "@/assets/logo.png";
 
@@ -66,6 +66,7 @@ export default function Index() {
           >
             <div className="w-100% h-100% ">
               <Routers />
+              <Outlet />
             </div>
           </Content>
         </Layout>
