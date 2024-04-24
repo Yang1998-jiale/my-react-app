@@ -42,7 +42,7 @@ export default function Index() {
   const location = useLocation();
   // console.log(location);
   const routerActives = findRouter(location.pathname, routerList);
-  function itemRender(currentRoute, params, items, paths) {
+  function itemRender(currentRoute, _params, _items, paths) {
     // console.log(currentRoute, params, items, paths);
 
     const isLast = currentRoute?.meta?.noBread;

@@ -25,9 +25,9 @@ export default class Axios {
     return this.axiosInstance;
   }
 
-  private createAxios(options) {
-    this.axiosInstance = axios.create(options);
-  }
+  // private createAxios(options) {
+  //   this.axiosInstance = axios.create(options);
+  // }
 
   //设置拦截器
   private axiosInterceptor() {
