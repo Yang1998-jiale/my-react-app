@@ -54,11 +54,11 @@ export default function Index() {
       >
         <Spin spinning={spining} fullscreen />
 
-        <div className="w-300px  b-rd-8px p-24px bg-#fff  items-center flex flex-col justify-start  translate-y--10%">
+        <div className="w-300px  b-rd-4px p-24px bg-#fff  items-center flex flex-col justify-start  translate-y--10% shadow-2xl">
           <img
             src={Logo}
             alt=""
-            className=" b-rd-50% w-140px h-130px p-b-24px b-1px b-#ccc b-solid"
+            className=" b-rd-50% w-140px h-160px  b-1px b-#ccc b-solid"
           />
           <h2 className="!m-16px">欢迎登录阿猹的React</h2>
           <Form
@@ -90,7 +90,7 @@ export default function Index() {
             </Form.Item>
             <Form.Item>
               <Button
-                className="w-240px b-rd-4px h-40px m-t-8px"
+                className="w-240px b-rd-4px h-40px m-t-8px bg-#308297 !hover-bg-#006E8E"
                 type="primary"
                 htmlType="submit"
               >
