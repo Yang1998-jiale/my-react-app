@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:32:24
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-24 16:00:26
+ * @LastEditTime: 2024-04-30 15:47:31
  * @Description: 描述
  */
 import React, { Suspense } from "react";
@@ -12,16 +12,17 @@ import App from "./App.tsx";
 import "./index.css";
 import { Spin } from "antd";
 import "uno.css";
-
+import store from "./store/index.ts";
+import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Suspense fallback={<Spin fullscreen />}>
-        
+    <Provider store={store}>
+      <BrowserRouter>
+        <Suspense fallback={<Spin fullscreen />}>
           <App />
-        
-      </Suspense>
-    </BrowserRouter>
+        </Suspense>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

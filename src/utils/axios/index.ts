@@ -2,13 +2,14 @@
  * @Author: yjl
  * @Date: 2024-04-24 09:43:59
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-24 16:16:38
+ * @LastEditTime: 2024-04-30 10:53:29
  * @Description: 描述
  */
 import Axios from "./axios";
 import { getItem } from "../cookie";
 import { Modal } from "antd";
 let errorModal: any = false;
+const queue: any = [];
 const transform = {
   requestInterceptors(config, options) {
     const token = getItem("Authorization");
@@ -16,6 +17,9 @@ const transform = {
       config.headers.Authorization = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
+    }
+    if (options.ignoreCancelToken) {
+      removeRepeatRequest(config);
     }
     return config;
   },
@@ -62,7 +66,7 @@ const transform = {
       Modal.error({
         content: message,
         centered: true,
-        title:'提示'
+        title: "提示",
       });
     }
   },
@@ -77,10 +81,30 @@ export function createAxios(config: any = {}) {
       isReturnNativeResponse: false,
       // 需要对返回数据进行处理
       isTransformResponse: true,
+      ignoreCancelToken: true,
       apiUrl: "",
     },
     ...(config || {}),
   });
 }
+
+// 取消重复请求
+const removeRepeatRequest = (config) => {
+  for (const key in queue) {
+    const index = +key;
+    const item = queue[key];
+
+    if (
+      item.url === config.url &&
+      item.method === config.method &&
+      JSON.stringify(item.params) === JSON.stringify(config.params) &&
+      JSON.stringify(item.data) === JSON.stringify(config.data)
+    ) {
+      // 执行取消操作
+      item.cancel("操作太频繁，请稍后再试");
+      queue.splice(index, 1);
+    }
+  }
+};
 
 export const defHttp = createAxios();

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-19 11:49:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-24 15:07:41
+ * @LastEditTime: 2024-04-30 12:32:44
  * @Description: 描述
  */
 import { useState } from "react";
@@ -11,7 +11,7 @@ import { Layout, Avatar, theme } from "antd";
 import headerImg from "@/assets/images/header.jpg";
 import Breadcrumb from "@/components/Breadcrumb/index";
 import Routers from "@/router/index";
-import { useNavigate,Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Logo from "@/assets/logo.png";
 
@@ -58,7 +58,7 @@ export default function Index() {
           </Header>
           <Breadcrumb />
           <Content
-            className="p-24px m-y-24px m-t-0px m-x-16px min-h-280px"
+            className=" m-y-24px m-t-0px m-x-16px min-h-280px overflow-hidden"
             style={{
               background: colorBgContainer,
               borderRadius: borderRadiusLG,

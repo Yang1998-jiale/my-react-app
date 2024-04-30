@@ -2,10 +2,12 @@
  * @Author: yjl
  * @Date: 2024-04-23 13:21:31
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-24 13:06:01
+ * @LastEditTime: 2024-04-30 14:50:50
  * @Description: 描述
  */
 import axios, { AxiosInstance, AxiosResponse } from "axios";
+
+
 
 function isFunction(target) {
   return typeof target === "function";
@@ -71,7 +73,9 @@ export default class Axios {
       });
     }
   }
-
+  get(config, options) {
+    return this.request({ ...config, method: "get" }, options);
+  }
   post(config, options) {
     return this.request({ ...config, method: "post" }, options);
   }
@@ -83,15 +87,19 @@ export default class Axios {
   request(config, options) {
     const { requestOptions } = this.options;
     const opt = Object.assign({}, requestOptions, options);
+    const { apiUrl } = options;
     config.requestOptions = opt;
     const transform = this.getTransform();
     const { transformResponse } = transform;
+    if (apiUrl) {
+      config.url = `${apiUrl}${config.url}`;
+    }
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request(config)
         .then((res) => {
           //等待处理
-          console.log(123);
+          // console.log(123);
 
           if (transformResponse && isFunction(transformResponse)) {
             try {
@@ -112,3 +120,4 @@ export default class Axios {
     });
   }
 }
+

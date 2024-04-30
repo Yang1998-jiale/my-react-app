@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:32:24
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-23 10:16:54
+ * @LastEditTime: 2024-04-30 13:38:40
  * @Description: 描述
  */
 import { defineConfig } from "vite";
@@ -37,5 +37,14 @@ export default defineConfig({
   server: {
     port: 7777,
     host: "0.0.0.0",
+    proxy: {
+      "/api": {
+        target: "https://game.gtimg.cn/images/lol/act/img/tft/", // 目标服务器地址
+        changeOrigin: true, // 改变源到目标服务器
+        ws: true,
+        rewrite: (path) => path.replace(new RegExp(`^/api`), ""),
+        // 其他可选配置...
+      },
+    },
   },
 });
