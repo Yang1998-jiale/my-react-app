@@ -19,7 +19,7 @@ export default function Editor() {
 
   return (
     <>
-      <div className="w-100% h-100% cursor-pointer details-page overflow-y-auto p-y-100px p-x-24px">
+      <div className="w-100% h-100% details-page overflow-y-auto p-y-100px p-x-24px">
         <ChessEquip />
       </div>
     </>
