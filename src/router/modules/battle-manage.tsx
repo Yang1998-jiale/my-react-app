@@ -7,7 +7,7 @@
  */
 import { lazy } from "react";
 const Battle = lazy(() => import("@/views/docunment-manage/md-list/index"));
-const Editor = lazy(() => import("@/views/battle-manage/editor"));
+const Editor = lazy(() => import("@/views/battle-manage/editor/index"));
 
 const battleManage = {
   path: "/battle",

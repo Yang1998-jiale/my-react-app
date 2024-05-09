@@ -5,8 +5,8 @@
  * @LastEditTime: 2024-04-30 16:11:15
  * @Description: 描述
  */
-import "./style/editor.css";
-import ChessEquip from "./component/chess";
+import "../style/editor.css";
+import ChessEquip from "./component/left";
 import { useDispatch } from "react-redux";
 import { initData } from "@/store/battle";
 import { useEffect } from "react";
