@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:07:43
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-10 21:40:11
+ * @LastEditTime: 2024-05-11 09:37:21
  * @Description: 描述
  */
 
@@ -15,10 +15,11 @@ import Equip from "./equip";
 
 export default function ChessEquip() {
   const [activeKey, setActiveKey] = useState("Chess");
-  let {
+  const {
     chess: chessList,
     job: jobList,
     race: raceList,
+    equip: equipList,
   } = useSelector(getBattleInfo);
 
   const tabs = [
@@ -72,7 +73,7 @@ export default function ChessEquip() {
               raceList={raceList}
             />
           ) : (
-            <Equip />
+            <Equip equipList={equipList} />
           )}
         </div>
       </div>

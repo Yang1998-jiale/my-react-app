@@ -40,12 +40,12 @@ export default function Chess({ chessList, jobList, raceList }) {
   });
 
   useEffect(() => {
-    let allData = chessFormart(chessList);
+    const allData = chessFormart(chessList);
     setChessData(allData);
   }, [chessList]);
 
   useEffect(() => {
-    let { keyword, jobID, raceID } = formState;
+    const { keyword, jobID, raceID } = formState;
     let filterData = chessList;
     if (keyword) {
       filterData = chessList.filter(
@@ -64,7 +64,7 @@ export default function Chess({ chessList, jobList, raceList }) {
         item.raceIds.split(",")?.includes(raceID)
       );
     }
-    let allData = chessFormart(filterData);
+    const allData = chessFormart(filterData);
     setChessData(allData);
   }, [formState]);
 
