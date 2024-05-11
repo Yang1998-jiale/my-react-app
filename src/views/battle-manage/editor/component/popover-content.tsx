@@ -1,3 +1,10 @@
+/*
+ * @Author: yjl
+ * @Date: 2024-05-10 09:15:11
+ * @LastEditors: yjl
+ * @LastEditTime: 2024-05-11 15:50:50
+ * @Description: 描述
+ */
 import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
 
@@ -8,13 +15,13 @@ export default function Content({ info, type }) {
   const { race, job } = useSelector(getBattleInfo);
 
   if (type == "chess") {
-    let raceInfo =
+    const raceInfo =
       race.filter((item) => info.raceIds.split(",").includes(item.raceId)) ||
       [];
-    let jobInfo =
+    const jobInfo =
       job.filter((item) => info.jobIds.split(",").includes(item.jobId)) || [];
 
-    let raceJob = [...raceInfo, ...jobInfo];
+    const raceJob = [...raceInfo, ...jobInfo];
 
     return (
       <div className="flex c-#fff">
@@ -35,16 +42,14 @@ export default function Content({ info, type }) {
           <div className="flex  flex-shrink-0 h-90px">
             <div className="w-70% p-12px flex  flex-col justify-center">
               {raceJob.map((item) => (
-                <>
-                  <div className="flex items-center">
-                    <img
-                      src={item.imagePath}
-                      className="w-16px h-16px img-filter"
-                      alt=""
-                    />
-                    <span className="c-#fff m-l-24px">{item.name}</span>
-                  </div>
-                </>
+                <div className="flex items-center" key={item.id}>
+                  <img
+                    src={item.imagePath}
+                    className="w-16px h-16px img-filter"
+                    alt=""
+                  />
+                  <span className="c-#fff m-l-24px">{item.name}</span>
+                </div>
               ))}
             </div>
             {Number(info.price) ? (
