@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-09 22:46:45
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-11 15:28:35
+ * @LastEditTime: 2024-05-12 14:30:20
  * @Description: 描述
  */
 
@@ -11,6 +11,8 @@ import { Input } from "antd";
 import { useState, useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { getGroupByKey } from "@/utils/index";
+import { Popover } from "antd";
+import Content from "./popover-content";
 interface Tab {
   label: string;
   value: number;
@@ -76,11 +78,10 @@ export default function Equip({ equipList }) {
     }
     if (activeKey) {
       filterEquip =
-        groupEquip.find((item) => activeKey == item.value)?.value || [];
+        groupEquip.find((item) => activeKey == item.type)?.value || [];
     }
     setEquipInfo(filterEquip);
     console.log(filterEquip);
-    
   }, [formState]);
 
   return (
@@ -121,11 +122,23 @@ export default function Equip({ equipList }) {
       <div className="flex-1 w-100% overflow-y-auto left-box">
         {equipInfo.map((item) => {
           return (
-            <img
-              src={item.imagePath}
-              className="w-50px h-50px m-r-8px m-b-8px cursor-pointer"
-              alt=""
-            />
+            <Popover
+              rootClassName={"chess-popover"}
+              key={item.id}
+              content={
+                <Content
+                  type="equip"
+                  info={item}
+                  baseInfo={groupEquip[0].value}
+                />
+              }
+            >
+              <img
+                src={item.imagePath}
+                className="w-44px h-44px m-r-8px m-b-8px cursor-pointer"
+                alt=""
+              />
+            </Popover>
           );
         })}
       </div>

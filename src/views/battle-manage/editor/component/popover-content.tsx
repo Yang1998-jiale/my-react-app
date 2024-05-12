@@ -2,18 +2,42 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-11 15:50:50
+ * @LastEditTime: 2024-05-12 15:04:52
  * @Description: 描述
  */
 import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const maxUrl = baseURl + "tftstore/s11/624x318/";
-
-export default function Content({ info, type }) {
+interface Props {
+  info: any;
+  type: string;
+  baseInfo?: any;
+}
+export default function Content({ info, type, baseInfo }: Props) {
   const { race, job } = useSelector(getBattleInfo);
+  const [formula, setFormula] = useState<any[]>([]);
 
+  useEffect(() => {
+    if (info.formula) {
+      let formulaIDS = info.formula.split(",");
+
+      if (formulaIDS[0] == formulaIDS[1]) {
+        let findObj = baseInfo.find((item) => item.equipId == formulaIDS[0]);
+        if (findObj) {
+          setFormula([findObj, findObj]);
+        }
+      } else {
+        let filterObj = baseInfo.filter((item) =>
+          formulaIDS.includes(item.equipId)
+        );
+        setFormula(filterObj);
+      }
+    }
+    console.log(formula);
+  }, [info, baseInfo]);
   if (type == "chess") {
     const raceInfo =
       race.filter((item) => info.raceIds.split(",").includes(item.raceId)) ||
@@ -74,7 +98,32 @@ export default function Content({ info, type }) {
       </div>
     );
   } else if (type == "equip") {
-    return <div>我是装备</div>;
+    return (
+      <div className="w-400px p-24px c-#fff">
+        <div className="flex items-center">
+          <img src={info.imagePath} className="w-60px h-60px" alt="" />
+          <span className="text-18px m-l-12px">{info.name}</span>
+        </div>
+        <div className="c-#999 m-t-16px text-18px">{info.effect}</div>
+        {info.type == 2 ? (
+          <div className="b-t-1px b-t-solid b-t-#c0c0c050 m-t-16px flex items-center p-t-16px">
+            <span className="text-16px m-r-8px">合成:</span>
+            <div>
+              {formula.map((item: any) => (
+                <img
+                  src={item?.imagePath}
+                  key={item.id}
+                  alt=""
+                  className="w-40px w-40px m-r-8px"
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+    );
   }
   return undefined;
 }
