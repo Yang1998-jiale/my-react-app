@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 16:16:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-24 16:34:34
+ * @LastEditTime: 2024-05-13 11:33:15
  * @Description: 描述
  */
 import { Menu } from "antd";
@@ -19,7 +19,7 @@ function generateMenu(routers: any) {
           <Menu.Item key={router.path}>
             <Link to={router.path}>
               <span>{router.icon}</span>
-              <span>{router.meta.title}</span>
+              <span className="text-truncate">{router.meta.title}</span>
             </Link>
           </Menu.Item>
         ) : (
@@ -29,7 +29,7 @@ function generateMenu(routers: any) {
         );
       }
       return router.meta?.isShow ? (
-        1
+        <></>
       ) : (
         <Menu.Item key={router.path}>
           <Link to={router.path}>

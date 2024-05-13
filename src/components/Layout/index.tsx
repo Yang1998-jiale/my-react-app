@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-19 11:49:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-30 12:32:44
+ * @LastEditTime: 2024-05-13 11:32:40
  * @Description: 描述
  */
 import { useState } from "react";
@@ -35,7 +35,9 @@ export default function Index() {
             onClick={() => navigate("/")}
           >
             <img src={Logo} className="w-36px h-36px b-rd-50%" alt="" />
-            <div className="c-#fff m-l-8px text-18px font-600">{title}</div>
+            <div className="c-#fff m-l-8px text-18px font-600 text-truncate">
+              {title}
+            </div>
           </div>
           <Menu />
         </Sider>

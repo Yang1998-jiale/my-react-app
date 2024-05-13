@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-24 16:20:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-30 10:17:12
+ * @LastEditTime: 2024-05-13 11:18:48
  * @Description: 描述
  */
 import { lazy } from "react";
@@ -11,6 +11,7 @@ const Editor = lazy(() => import("@/views/battle-manage/editor/index"));
 
 const battleManage = {
   path: "/battle",
+  name: "Battle",
   caseSensitive: true,
   order: 4,
   meta: {

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-12 15:04:52
+ * @LastEditTime: 2024-05-13 09:40:18
  * @Description: 描述
  */
 import { getBattleInfo } from "@/store/battle";
@@ -22,15 +22,15 @@ export default function Content({ info, type, baseInfo }: Props) {
 
   useEffect(() => {
     if (info.formula) {
-      let formulaIDS = info.formula.split(",");
+      const formulaIDS = info.formula.split(",");
 
       if (formulaIDS[0] == formulaIDS[1]) {
-        let findObj = baseInfo.find((item) => item.equipId == formulaIDS[0]);
+        const findObj = baseInfo.find((item) => item.equipId == formulaIDS[0]);
         if (findObj) {
           setFormula([findObj, findObj]);
         }
       } else {
-        let filterObj = baseInfo.filter((item) =>
+        const filterObj = baseInfo.filter((item) =>
           formulaIDS.includes(item.equipId)
         );
         setFormula(filterObj);

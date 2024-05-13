@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:07:43
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-11 09:37:21
+ * @LastEditTime: 2024-05-13 15:43:58
  * @Description: 描述
  */
 
@@ -10,8 +10,8 @@ import { useState } from "react";
 import "../../style/chess.less";
 import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
-import Chess from "./chess";
-import Equip from "./equip";
+import Chess from "../component/chess";
+import Equip from "../component/equip";
 
 export default function ChessEquip() {
   const [activeKey, setActiveKey] = useState("Chess");
@@ -37,7 +37,7 @@ export default function ChessEquip() {
   }
   return (
     <>
-      <div className="min-w-20% w-20 bg-[rgba(26,31,58,.5)] h-100% p-24px b-rd-8px flex flex-col">
+      <div className="min-w-22.5% max-w-22.5% bg-[rgba(26,31,58,.5)] h-100% p-24px b-rd-8px flex flex-col flex-shrink-0">
         <div className="w-100% top-0 left-0 flex-shrink-0">
           <div className="flex">
             {tabs.map((item) => {

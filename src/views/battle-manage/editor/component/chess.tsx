@@ -3,6 +3,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import Content from "./popover-content";
 import { useState, useEffect } from "react";
 // import "../../style/chess.less";
+import { drap } from "@/utils/drap";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -46,6 +47,7 @@ export default function Chess({ chessList, jobList, raceList }) {
 
   useEffect(() => {
     const { keyword, jobID, raceID } = formState;
+
     let filterData = chessList;
     if (keyword) {
       filterData = chessList.filter(
@@ -142,6 +144,10 @@ export default function Chess({ chessList, jobList, raceList }) {
                           key={item.id}
                         >
                           <img
+                            draggable="true"
+                            onDrag={() => {
+                              drap(item);
+                            }}
                             src={minUrl + item.name}
                             className="w-50px h-50px m-r-8px m-b-8px cursor-pointer"
                             alt=""
