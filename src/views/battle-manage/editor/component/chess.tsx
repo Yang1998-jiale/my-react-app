@@ -3,7 +3,8 @@ import { SearchOutlined } from "@ant-design/icons";
 import Content from "./popover-content";
 import { useState, useEffect } from "react";
 // import "../../style/chess.less";
-import { drap } from "@/utils/drap";
+import { setActiveChess } from "@/store/chess";
+import { useDispatch } from "react-redux";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -40,6 +41,14 @@ export default function Chess({ chessList, jobList, raceList }) {
     raceID: undefined,
   });
 
+  const dispatch = useDispatch();
+
+  function drap(record, type) {
+    if (type == "chess") {
+      dispatch(setActiveChess(record));
+    }
+  }
+
   useEffect(() => {
     const allData = chessFormart(chessList);
     setChessData(allData);
@@ -68,7 +77,7 @@ export default function Chess({ chessList, jobList, raceList }) {
     }
     const allData = chessFormart(filterData);
     setChessData(allData);
-  }, [formState]);
+  }, [formState, chessList]);
 
   return (
     <div className="w-100% h-100% flex flex-col relative ">
@@ -146,7 +155,7 @@ export default function Chess({ chessList, jobList, raceList }) {
                           <img
                             draggable="true"
                             onDrag={() => {
-                              drap(item);
+                              drap(item, "chess");
                             }}
                             src={minUrl + item.name}
                             className="w-50px h-50px m-r-8px m-b-8px cursor-pointer"
