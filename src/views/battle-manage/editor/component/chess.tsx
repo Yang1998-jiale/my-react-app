@@ -158,7 +158,9 @@ export default function Chess({ chessList, jobList, raceList }) {
                               drap(item, "chess");
                             }}
                             src={minUrl + item.name}
-                            className="w-50px h-50px m-r-8px m-b-8px cursor-pointer"
+                            className={`w-50px h-50px m-r-8px m-b-8px cursor-pointer price-bd ${
+                              item.price ? "price-bd-" + item.price : ""
+                            }`}
                             alt=""
                           />
                         </Popover>

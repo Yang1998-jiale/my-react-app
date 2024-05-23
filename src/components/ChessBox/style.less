@@ -1,0 +1,42 @@
+.chess-box {
+  background: url("../../assets/images/slot-bg.png") no-repeat;
+  background-size: 100%;
+  width: 60px;
+  height: 70px;
+  position: relative;
+  margin: 0 auto;
+
+  .bg-img {
+    display: block !important;
+    margin: 0 auto !important;
+    -webkit-mask-image: url("../../assets/images/slot-bg.png") !important;
+    mask-image: url("../../assets/images/slot-bg.png") !important;
+    -webkit-mask-size: 100% !important;
+    mask-size: 100% !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+    background-position: center !important;
+  }
+}
+
+.chess-box::after {
+  content: "";
+  background: url(//game.gtimg.cn/images/lol/act/a20220802tftsimulator/slot-mask-border.png)
+    no-repeat center / 100%;
+  width: 60px;
+  height: 70px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -50%;
+}
+
+
+
+.loopPriceBg(@count) when (@count>0) {
+  .loopPriceBg((@count - 1));
+  .price-@{count}::after {
+    background-image: url("../../assets/images/icon-price-@{count}.png");
+  }
+}
+.loopPriceBg(5);

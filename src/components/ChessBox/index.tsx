@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-13 15:47:40
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-22 18:03:08
+ * @LastEditTime: 2024-05-23 16:46:39
  * @Description: 描述
  */
 import Empty from "./src/empty-box";
@@ -11,11 +11,14 @@ import { useDispatch } from "react-redux";
 import { update, resetActiveChess, resetActiveChessIndex } from "@/store/chess";
 import { useSelector } from "react-redux";
 import { getChessList } from "@/store/chess";
+import "./style.less";
 
 export default function ChessBox({ info, index }) {
   const dispatch = useDispatch();
   const { activeChessInfo, activeChessIndex } = useSelector(getChessList);
-  function drop(e: { preventDefault: () => void }) {
+  function drop(e: { preventDefault: () => void; target: HTMLElement }) {
+    console.log(e.target.getAttribute("data-index"));
+
     if (!activeChessInfo) return;
     e.preventDefault();
     const obj: any = {
@@ -32,7 +35,7 @@ export default function ChessBox({ info, index }) {
         {info ? (
           <Conter info={info} index={index} onDropFn={drop} />
         ) : (
-          <Empty onDropFn={drop} />
+          <Empty onDropFn={drop} index={index} />
         )}
       </div>
     </>

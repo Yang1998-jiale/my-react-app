@@ -84,3 +84,22 @@
 .input-item .ant-input::placeholder {
   color: #999 !important;
 }
+
+.price-bd {
+  border: 2px solid #2f3555;
+  border-radius: 4px;
+}
+
+@br1:#999;
+@br2:#5fcc29;
+@br3:#297acc;
+@br4:#cc29cc;
+@br5:#cca329;
+.loopPrice(@count) when (@count>0) {
+  .loopPrice((@count - 1));
+  .price-bd-@{count}{
+    @id:'br@{count}';
+    border-color: @@id;
+  };
+}
+.loopPrice(5);

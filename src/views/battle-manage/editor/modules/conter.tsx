@@ -2,11 +2,13 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:10:27
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 16:34:34
+ * @LastEditTime: 2024-05-23 17:33:57
  * @Description: 描述
  */
 import { useState } from "react";
 import ChessBoard from "../component/chess-board";
+import { resetData } from "@/store/chess";
+import { useDispatch } from "react-redux";
 const Stance = [
   {
     key: 1,
@@ -18,6 +20,7 @@ const Stance = [
   },
 ];
 export default function Conter() {
+  const dispatch = useDispatch();
   const list = [];
   const [stanceKey, setStanceKey] = useState<number | string>(1);
   return (
@@ -47,7 +50,12 @@ export default function Conter() {
               </div>
             ))}
           </div>
-          <div className="p-x-10px p-y-4px c-[rgba(239,242,245,.3)] b-1px b-solid b-[rgba(239,242,245,.2)]  b-rd-2px hover-c-#c174e8 cursor-pointer hover-b-[#c174e8] ">
+          <div
+            className="p-x-10px p-y-4px c-[rgba(239,242,245,.3)] b-1px b-solid b-[rgba(239,242,245,.2)]  b-rd-2px hover-c-#c174e8 cursor-pointer hover-b-[#c174e8]"
+            onClick={() => {
+              dispatch(resetData());
+            }}
+          >
             重置棋盘
           </div>
         </div>

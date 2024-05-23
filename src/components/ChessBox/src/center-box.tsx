@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-22 17:52:57
+ * @LastEditTime: 2024-05-23 16:59:13
  * @Description: 描述
  */
 
@@ -22,12 +22,17 @@ export default function CenterBox({ info, index, onDropFn }) {
     <>
       <div
         onDrop={(e) => onDropFn(e)}
+        className={`chess-box ${info?.price ? "price-" + info.price : ""}`}
         onClick={() => {
           dispatch(update({ value: null, index } as any));
         }}
         onDrag={dragStart}
       >
-        <img src={minUrl + info.name} className="w-50px h-50px" alt="" />
+        <i
+          data-index={index}
+          className="w-100% h-100% bg-img "
+          style={{ background: `url(${minUrl + info.name})` }}
+        ></i>
       </div>
     </>
   );
