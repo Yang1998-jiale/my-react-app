@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 // import "../../style/chess.less";
 import { setActiveChess } from "@/store/chess";
 import { useDispatch } from "react-redux";
+import { useBattle } from "../index";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -30,6 +31,7 @@ function chessFormart(target) {
 }
 //棋子组件
 export default function Chess({ chessList, jobList, raceList }) {
+  const { clickPushHero } = useBattle();
   const [chessData, setChessData]: any = useState([]);
   const [formState, setFormState] = useState<{
     keyword: string | undefined;
@@ -156,6 +158,9 @@ export default function Chess({ chessList, jobList, raceList }) {
                             draggable="true"
                             onDrag={() => {
                               drap(item, "chess");
+                            }}
+                            onClick={() => {
+                              clickPushHero(item.id);
                             }}
                             src={minUrl + item.name}
                             className={`w-50px h-50px m-r-8px m-b-8px cursor-pointer price-bd ${

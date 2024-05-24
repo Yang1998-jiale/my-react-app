@@ -2,14 +2,10 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:10:27
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-24 17:05:07
+ * @LastEditTime: 2024-05-24 17:27:31
  * @Description: 描述
  */
-import { useState, useRef } from "react";
-// import ChessBoard from "../component/chess-board";
 import Final from "../component/final-position";
-// import { resetData } from "@/store/chess";
-// import { useDispatch } from "react-redux";
 import { useBattle } from "../index";
 
 const Stance = [
@@ -23,22 +19,26 @@ const Stance = [
   },
 ];
 export default function Conter() {
-  const { finalHeroList, setFinalHeroList } = useBattle();
+  const { finalHeroList, setFinalHeroList, stanceKey, setStanceKey } =
+    useBattle();
   console.log("我是battle", finalHeroList);
 
-  // const dispatch = useDispatch();
-  const finalRef = useRef();
-  console.log("我是conter", finalRef);
-
-  const list = [];
- 
   return (
     <>
       <div className="flex-1  bg-[rgba(26,31,58,.5)] min-h-40% flex flex-col m-x-16px p-24px b-rd-8px">
         <div className="c-#fff flex items-center">
           <div className="flex items-center flex-1">
             <span className="text-18px m-r-16px">阵容占位</span>
-            <span>人口数: {list.length}/10</span>
+            {stanceKey == 1 ? (
+              <span>
+                人口数:
+                {finalHeroList.filter((item) => item.chessType == "hero")
+                  ?.length || 0}
+                /10
+              </span>
+            ) : (
+              <span></span>
+            )}
           </div>
           <div className="flex items-center m-r-16px">
             {Stance.map((item) => (
@@ -70,7 +70,7 @@ export default function Conter() {
           </div>
         </div>
         <div className="flex-1 m-y-24px m-t-56px">
-          {stanceKey == 1 ? <Final ref={finalRef} /> : <div></div>}
+          {stanceKey == 1 ? <Final heroList={finalHeroList} /> : <div></div>}
         </div>
       </div>
     </>

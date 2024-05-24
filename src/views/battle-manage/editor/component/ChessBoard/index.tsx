@@ -2,29 +2,25 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:48:52
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-24 15:16:13
+ * @LastEditTime: 2024-05-24 17:50:27
  * @Description: 描述
  */
-import ChessBox from "@/components/ChessBox/index";
-// import { useSelector } from "react-redux";
-// import { getChessList } from "@/store/chess";
+import ChessBox from "../ChessBox/index";
 import type { Chess } from "@/types/battle";
 interface ChessBoardProps {
   heroList: Chess[];
-  positionKey: number;
+  positonKey: number;
 }
-export default function ChessBoard({ heroList, positionKey }: ChessBoardProps) {
-  // const { list: chessList } = useSelector(getChessList);
+export default function ChessBoard({ heroList, positonKey }: ChessBoardProps) {
   const boardList = new Array(28).fill(null);
-  // const [heroList, setHeroList] = useState<Chess[]>([]);
 
   function getChessInfo(x, y) {
     if (getChessInfo.length === 0) {
       return null;
     }
     const chessInfo = heroList.find((item) => {
-      const xy = item.position[positionKey] || undefined;
-      return xy === `${x}-${y}`;
+      const xy = item.position[positonKey] || undefined;
+      return xy === `${x},${y}`;
     });
     return chessInfo || null;
   }

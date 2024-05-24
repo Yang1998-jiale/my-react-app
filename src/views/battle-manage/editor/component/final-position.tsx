@@ -1,5 +1,5 @@
-import { useState, forwardRef, useImperativeHandle } from "react";
-import CbessBoard from "@/components/ChessBoard/index";
+import { useState } from "react";
+import CbessBoard from "./ChessBoard/index";
 const PositionList = [
   {
     label: "站位一",
@@ -10,15 +10,10 @@ const PositionList = [
     value: 1,
   },
 ];
-function FinalPosition(_props, parentRef) {
-  const [heroList, setHeroList] = useState([]);
+export default function Final({ heroList }) {
+  //   const [heroList, setHeroList] = useState([]);
   const [positonKey, setPositionKey] = useState<number>(0);
-  useImperativeHandle(parentRef, () => {
-    return {
-      setHeroList,
-      heroList,
-    };
-  });
+
   return (
     <>
       <div className="w-100% h-100% cursor-pointer">
@@ -46,5 +41,3 @@ function FinalPosition(_props, parentRef) {
     </>
   );
 }
-const Final = forwardRef(FinalPosition);
-export default Final;
