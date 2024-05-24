@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:48:52
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-24 15:16:13
+ * @LastEditTime: 2024-05-24 15:23:51
  * @Description: 描述
  */
 import ChessBox from "@/components/ChessBox/index";
@@ -11,9 +11,9 @@ import ChessBox from "@/components/ChessBox/index";
 import type { Chess } from "@/types/battle";
 interface ChessBoardProps {
   heroList: Chess[];
-  positionKey: number;
+  positonKey: number;
 }
-export default function ChessBoard({ heroList, positionKey }: ChessBoardProps) {
+export default function ChessBoard({ heroList, positonKey }: ChessBoardProps) {
   // const { list: chessList } = useSelector(getChessList);
   const boardList = new Array(28).fill(null);
   // const [heroList, setHeroList] = useState<Chess[]>([]);
@@ -23,7 +23,7 @@ export default function ChessBoard({ heroList, positionKey }: ChessBoardProps) {
       return null;
     }
     const chessInfo = heroList.find((item) => {
-      const xy = item.position[positionKey] || undefined;
+      const xy = item.position[positonKey] || undefined;
       return xy === `${x}-${y}`;
     });
     return chessInfo || null;
