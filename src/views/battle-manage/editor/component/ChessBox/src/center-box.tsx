@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-24 18:13:47
+ * @LastEditTime: 2024-05-28 15:00:10
  * @Description: 描述
  */
 
@@ -12,23 +12,40 @@ import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
 import { useBattle } from "@/views/battle-manage/editor/index";
 
-export default function CenterBox({ info, index }) {
-  const { deleteHero } = useBattle();
+export default function CenterBox({ info, index, positonKey = 0 }) {
+  const { dropChessPosition } = useBattle();
   const { chess: chessList } = useSelector(getBattleInfo);
   const detail = chessList.find((item) => item.id == info.heroID);
+
+  function dropFn(e) {
+    // console.log(e);
+    const targetXY = e.dataTransfer.getData("chessXY");
+    const xy = `${Math.floor(index / 7)},${index % 7}`;
+    dropChessPosition(targetXY, xy, positonKey);
+  }
+
+  function ondragstart(e) {
+    const dt = e.dataTransfer;
+    dt.setData("chessXY", info.position[positonKey]);
+    dt.setData("action", "update");
+  }
 
   return (
     <>
       <div
-        onDrop={() => {}}
+        onDrop={(e) => {
+          dropFn(e);
+        }}
+        onDragStart={(e) => {
+          ondragstart(e);
+        }}
+        draggable="true"
         className={`chess-box ${detail?.price ? "price-" + detail.price : ""}`}
         onClick={() => {
-          deleteHero(info);
+          // deleteHero(info);
         }}
-        onDrag={() => {}}
       >
         <i
-          data-index={index}
           className="w-100% h-100% bg-img "
           style={{ background: `url(${minUrl + detail?.name})` }}
         ></i>

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:48:52
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-24 17:50:27
+ * @LastEditTime: 2024-05-28 14:00:06
  * @Description: 描述
  */
 import ChessBox from "../ChessBox/index";
@@ -44,6 +44,7 @@ export default function ChessBoard({ heroList, positonKey }: ChessBoardProps) {
               <ChessBox
                 info={getChessInfo(Math.floor(index / 7), index % 7)}
                 index={index}
+                positonKey={positonKey}
               />
             </div>
           );

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-24 18:05:45
+ * @LastEditTime: 2024-05-28 14:59:06
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -15,7 +15,7 @@ import { message } from "antd";
 import type { Chess } from "@/types/battle";
 const BattleContext = createContext<any>(null);
 
-function createHero(heroID, chessType = "hero"): Chess {
+export function createHero(heroID, chessType = "hero"): Chess {
   return {
     chessType,
     heroID,
@@ -41,24 +41,60 @@ export default function Editor() {
     }
   }
 
-  function finalPush(target) {
+  function finalPush(target, xy = "") {
     const filterHero = finalHeroList.filter((item) => item.chessType == "hero");
     if (filterHero?.length >= 10) {
       message.error("阵容中英雄数量超过10个");
       return;
     }
-    const xy =
-      Math.floor(finalHeroList.length / 7) + "," + (finalHeroList.length % 7);
+    if (!xy) {
+      xy =
+        Math.floor(finalHeroList.length / 7) + "," + (finalHeroList.length % 7);
+    }
     target.position = [xy, xy];
     finalHeroList.push(target);
     setFinalHeroList([...finalHeroList]);
   }
 
-  // function drapFn(hero) {
-  //   if (typeof hero !== "object") {
-  //     hero = createHero(hero);
-  //   }
-  // }
+  function dropChessAdd(target, xy) {
+    if (stanceKey == 1) {
+      finalPush(target, xy);
+    }
+  }
+
+  function dropChessUpdate(start, end, key) {
+    if (stanceKey == 1) {
+      setFinalHeroList(
+        finalHeroList.map((item) => {
+          if (item.position[key] === start) {
+            item.position[key] = end;
+          }
+          return item;
+        })
+      );
+    }
+  }
+  function dropChessPosition(start, end, key) {
+    if (stanceKey == 1) {
+      const startIndex = finalHeroList.findIndex(
+        (item) => item.position[key] === start
+      );
+      const endIndex = finalHeroList.findIndex(
+        (item) => item.position[key] === end
+      );
+      setFinalHeroList(
+        finalHeroList.map((item, index) => {
+          if (index == startIndex) {
+            item.position[key] = end;
+          }
+          if (index == endIndex) {
+            item.position[key] = start;
+          }
+          return item;
+        })
+      );
+    }
+  }
 
   return (
     <>
@@ -70,6 +106,9 @@ export default function Editor() {
             stanceKey,
             setStanceKey,
             clickPushHero,
+            dropChessAdd,
+            dropChessUpdate,
+            dropChessPosition
           }}
         >
           <ChessEquip />

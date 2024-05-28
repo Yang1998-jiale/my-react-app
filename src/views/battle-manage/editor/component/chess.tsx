@@ -81,6 +81,12 @@ export default function Chess({ chessList, jobList, raceList }) {
     setChessData(allData);
   }, [formState, chessList]);
 
+  function ondragstart(e, id) {
+    const dt = e.dataTransfer;
+    dt.setData("chessID", id);
+    dt.setData("action", "add");
+  }
+
   return (
     <div className="w-100% h-100% flex flex-col relative ">
       <div className="sticky top-0 left-0 ">
@@ -158,6 +164,9 @@ export default function Chess({ chessList, jobList, raceList }) {
                             draggable="true"
                             onDrag={() => {
                               drap(item, "chess");
+                            }}
+                            onDragStart={(e) => {
+                              ondragstart(e, item.id);
                             }}
                             onClick={() => {
                               clickPushHero(item.id);
