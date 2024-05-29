@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-09 22:46:45
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-12 14:30:20
+ * @LastEditTime: 2024-05-29 13:50:39
  * @Description: 描述
  */
 
@@ -13,56 +13,20 @@ import { SearchOutlined } from "@ant-design/icons";
 import { getGroupByKey } from "@/utils/index";
 import { Popover } from "antd";
 import Content from "./popover-content";
-interface Tab {
-  label: string;
-  value: number;
-}
-//装备组件
-const EquipType: Tab[] = [
-  {
-    label: "基础装备",
-    value: 1,
-  },
-  {
-    label: "合成装备",
-    value: 2,
-  },
-  {
-    label: "光明装备",
-    value: 3,
-  },
-  {
-    label: "特殊装备",
-    value: 4,
-  },
-  {
-    label: "转职纹章",
-    value: 5,
-  },
-  {
-    label: "奥恩神器",
-    value: 6,
-  },
-  {
-    label: "金鳞龙装备",
-    value: 7,
-  },
-  {
-    label: "辅助装备",
-    value: 8,
-  },
-];
+import { EquipType } from "../util";
+import type { Tabs } from "@/types/battle";
+
 export default function Equip({ equipList }) {
   const groupEquip = getGroupByKey(equipList, "type");
   const [formState, setFormState] = useState<{
     keyword: string | undefined;
-    activeKey: number | undefined;
+    activeKey: number | undefined | string;
   }>({
     keyword: undefined,
     activeKey: 1,
   });
   const [equipInfo, setEquipInfo] = useState<any>([]);
-  function tabChange(record: Tab) {
+  function tabChange(record: Tabs) {
     setFormState({ keyword: undefined, activeKey: record.value });
   }
 
@@ -82,13 +46,13 @@ export default function Equip({ equipList }) {
     }
     setEquipInfo(filterEquip);
     console.log(filterEquip);
-  }, [formState]);
+  }, [equipList, formState, groupEquip]);
 
   return (
     <div className="w-100% h-100% flex flex-col relative ">
       <div className="sticky top-0 left-0 ">
         <Input
-          onChange={({ target: { value } }) => {
+          onChange={({ target: { value } }:React.ChangeEvent<HTMLInputElement>) => {
             setFormState({ activeKey: value ? undefined : 1, keyword: value });
           }}
           prefix={<SearchOutlined />}

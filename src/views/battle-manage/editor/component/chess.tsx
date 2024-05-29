@@ -3,32 +3,12 @@ import { SearchOutlined } from "@ant-design/icons";
 import Content from "./popover-content";
 import { useState, useEffect } from "react";
 // import "../../style/chess.less";
-import { setActiveChess } from "@/store/chess";
-import { useDispatch } from "react-redux";
-import { useBattle } from "../index";
+import { useBattle } from "../util";
+import { chessFormart } from "../util";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
 
-function chessFormart(target) {
-  const newTarget = new Array(6).fill(undefined);
-  if (!target.length) return [];
-  target.forEach((item) => {
-    const price = Number(item.price);
-    if (item.id == "7593") {
-      return;
-    }
-    if (newTarget[price]) {
-      newTarget[price].chessList.push(item);
-    } else {
-      newTarget[price] = {
-        price: price,
-        chessList: [item],
-      };
-    }
-  });
-  return newTarget.filter((item) => item?.price);
-}
 //棋子组件
 export default function Chess({ chessList, jobList, raceList }) {
   const { clickPushHero } = useBattle();
@@ -43,13 +23,8 @@ export default function Chess({ chessList, jobList, raceList }) {
     raceID: undefined,
   });
 
-  const dispatch = useDispatch();
 
-  function drap(record, type) {
-    if (type == "chess") {
-      dispatch(setActiveChess(record));
-    }
-  }
+
 
   useEffect(() => {
     const allData = chessFormart(chessList);
@@ -81,7 +56,7 @@ export default function Chess({ chessList, jobList, raceList }) {
     setChessData(allData);
   }, [formState, chessList]);
 
-  function ondragstart(e, id) {
+  function ondragstart(e: React.DragEvent<HTMLDivElement>, id: string) {
     const dt = e.dataTransfer;
     dt.setData("chessID", id);
     dt.setData("action", "add");
@@ -162,9 +137,6 @@ export default function Chess({ chessList, jobList, raceList }) {
                         >
                           <img
                             draggable="true"
-                            onDrag={() => {
-                              drap(item, "chess");
-                            }}
                             onDragStart={(e) => {
                               ondragstart(e, item.id);
                             }}

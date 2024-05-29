@@ -2,16 +2,19 @@
  * @Author: yjl
  * @Date: 2024-05-13 15:25:28
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-28 14:43:14
+ * @LastEditTime: 2024-05-29 15:53:44
  * @Description: 描述
  */
 // import { useState } from "react";
 import bg from "@/assets/images/slot-bg.png";
-import { createHero, useBattle } from "@/views/battle-manage/editor/index";
-
-export default function ChessBox({ index, positonKey = 0 }) {
+import { createHero, useBattle } from "@/views/battle-manage/editor/util";
+interface Props {
+  index: number;
+  positonKey: number;
+}
+export default function ChessBox({ index, positonKey = 0 }: Props) {
   const { dropChessAdd, dropChessUpdate } = useBattle();
-  function dropFn(e) {
+  function dropFn(e: React.DragEvent) {
     const xy = `${Math.floor(index / 7)},${index % 7}`;
     console.log(xy);
 

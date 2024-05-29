@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:07:43
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 15:43:58
+ * @LastEditTime: 2024-05-29 13:24:47
  * @Description: 描述
  */
 
@@ -12,9 +12,10 @@ import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
 import Chess from "../component/chess";
 import Equip from "../component/equip";
+import type { Tabs } from "@/types/battle";
 
 export default function ChessEquip() {
-  const [activeKey, setActiveKey] = useState("Chess");
+  const [activeKey, setActiveKey] = useState<string | number>("Chess");
   const {
     chess: chessList,
     job: jobList,
@@ -22,17 +23,19 @@ export default function ChessEquip() {
     equip: equipList,
   } = useSelector(getBattleInfo);
 
-  const tabs = [
+  const tabs: Tabs[] = [
     {
       key: "Chess",
+      value: "Chess",
       label: "英雄",
     },
     {
       key: "Equip",
+      value: "Equip",
       label: "装备",
     },
   ];
-  function tabChange(record) {
+  function tabChange(record: Tabs) {
     setActiveKey(record.key);
   }
   return (

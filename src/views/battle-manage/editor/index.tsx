@@ -2,29 +2,18 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-28 14:59:06
+ * @LastEditTime: 2024-05-29 13:21:52
  * @Description: 描述
  */
 import "../style/editor.css";
 import ChessEquip from "./modules/left";
 import { useDispatch } from "react-redux";
 import { initData } from "@/store/battle";
-import { useEffect, createContext, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import Conter from "./modules/conter";
 import { message } from "antd";
 import type { Chess } from "@/types/battle";
-const BattleContext = createContext<any>(null);
-
-export function createHero(heroID, chessType = "hero"): Chess {
-  return {
-    chessType,
-    heroID,
-    equipID: [],
-    position: [],
-    isCarry: false,
-    isChosen: false,
-  };
-}
+import { BattleContext, createHero } from "./util";
 
 export default function Editor() {
   const [finalHeroList, setFinalHeroList] = useState<Chess[]>([]);
@@ -34,14 +23,14 @@ export default function Editor() {
     dispatch(initData() as any);
   });
 
-  function clickPushHero(heroID) {
+  function clickPushHero(heroID: string) {
     const chessObj = createHero(heroID);
     if (stanceKey == 1) {
       finalPush(chessObj);
     }
   }
 
-  function finalPush(target, xy = "") {
+  function finalPush(target: Chess, xy: string = "") {
     const filterHero = finalHeroList.filter((item) => item.chessType == "hero");
     if (filterHero?.length >= 10) {
       message.error("阵容中英雄数量超过10个");
@@ -56,14 +45,14 @@ export default function Editor() {
     setFinalHeroList([...finalHeroList]);
   }
 
-  function dropChessAdd(target, xy) {
-    if (stanceKey == 1) {
+  function dropChessAdd(target: Chess, xy: string) {
+    if (stanceKey === 1) {
       finalPush(target, xy);
     }
   }
 
-  function dropChessUpdate(start, end, key) {
-    if (stanceKey == 1) {
+  function dropChessUpdate(start: string, end: string, key: number) {
+    if (stanceKey === 1) {
       setFinalHeroList(
         finalHeroList.map((item) => {
           if (item.position[key] === start) {
@@ -74,8 +63,8 @@ export default function Editor() {
       );
     }
   }
-  function dropChessPosition(start, end, key) {
-    if (stanceKey == 1) {
+  function dropChessPosition(start: string, end: string, key: number) {
+    if (stanceKey === 1) {
       const startIndex = finalHeroList.findIndex(
         (item) => item.position[key] === start
       );
@@ -108,7 +97,7 @@ export default function Editor() {
             clickPushHero,
             dropChessAdd,
             dropChessUpdate,
-            dropChessPosition
+            dropChessPosition,
           }}
         >
           <ChessEquip />
@@ -119,7 +108,3 @@ export default function Editor() {
     </>
   );
 }
-
-export const useBattle = () => {
-  return useContext(BattleContext);
-};

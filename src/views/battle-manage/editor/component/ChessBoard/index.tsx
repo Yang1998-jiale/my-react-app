@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:48:52
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-28 14:00:06
+ * @LastEditTime: 2024-05-29 15:49:37
  * @Description: 描述
  */
 import ChessBox from "../ChessBox/index";
@@ -14,7 +14,7 @@ interface ChessBoardProps {
 export default function ChessBoard({ heroList, positonKey }: ChessBoardProps) {
   const boardList = new Array(28).fill(null);
 
-  function getChessInfo(x, y) {
+  function getChessInfo(x: number, y: number): Chess | null {
     if (getChessInfo.length === 0) {
       return null;
     }

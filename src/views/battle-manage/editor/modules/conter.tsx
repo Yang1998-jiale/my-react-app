@@ -2,26 +2,16 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:10:27
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-24 17:27:31
+ * @LastEditTime: 2024-05-29 13:29:11
  * @Description: 描述
  */
 import Final from "../component/final-position";
-import { useBattle } from "../index";
+import { useBattle } from "../util";
+import { Stance } from "../util";
 
-const Stance = [
-  {
-    key: 1,
-    value: "最终站位",
-  },
-  {
-    key: 2,
-    value: "前中期",
-  },
-];
 export default function Conter() {
   const { finalHeroList, setFinalHeroList, stanceKey, setStanceKey } =
     useBattle();
-  console.log("我是battle", finalHeroList);
 
   return (
     <>
@@ -44,18 +34,18 @@ export default function Conter() {
             {Stance.map((item) => (
               <div
                 style={
-                  stanceKey == item.key
+                  stanceKey === item.value
                     ? {
                         background: "#c174e8",
                         color: "#fff",
                       }
                     : {}
                 }
-                onClick={() => setStanceKey(item.key)}
+                onClick={() => setStanceKey(item.value)}
                 key={item.key}
                 className="text-center w-80px p-x-10px p-y-4px c-[rgba(239,242,245,.3)] b-1px b-solid b-[rgba(239,242,245,.2)]  b-rd-2px hover-c-#c174e8 cursor-pointer hover-b-[#c174e8]"
               >
-                {item.value}
+                {item.label}
               </div>
             ))}
           </div>

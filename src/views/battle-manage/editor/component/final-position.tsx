@@ -1,18 +1,17 @@
+/*
+ * @Author: yjl
+ * @Date: 2024-05-27 15:40:44
+ * @LastEditors: yjl
+ * @LastEditTime: 2024-05-29 15:09:23
+ * @Description: 描述
+ */
 import { useState } from "react";
 import CbessBoard from "./ChessBoard/index";
-const PositionList = [
-  {
-    label: "站位一",
-    value: 0,
-  },
-  {
-    label: "站位二",
-    value: 1,
-  },
-];
+import { PositionList } from "../util";
+
 export default function Final({ heroList }) {
   //   const [heroList, setHeroList] = useState([]);
-  const [positonKey, setPositionKey] = useState<number>(0);
+  const [positonKey, setPositionKey] = useState<number | string>(0);
 
   return (
     <>
@@ -36,7 +35,7 @@ export default function Final({ heroList }) {
             </div>
           ))}
         </div>
-        <CbessBoard heroList={heroList} positonKey={positonKey} />
+        <CbessBoard heroList={heroList} positonKey={positonKey as number} />
       </div>
     </>
   );

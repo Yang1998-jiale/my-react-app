@@ -1,3 +1,10 @@
+/*
+ * @Author: yjl
+ * @Date: 2024-05-27 15:40:44
+ * @LastEditors: yjl
+ * @LastEditTime: 2024-05-29 13:24:02
+ * @Description: 描述
+ */
 export interface Chess {
   chessType: string;
   heroID: number | string;
@@ -6,6 +13,12 @@ export interface Chess {
   isCarry: boolean;
   isChosen: boolean;
 }
+
+export type Tabs = {
+  label: string;
+  value: number | string;
+  key: number | string;
+};
 // let chess = {
 //   heroID: "xxx", //英雄ID
 //   equipID: "xxx,xxx,xxx", //装备ID
