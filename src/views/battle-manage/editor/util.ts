@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-29 15:07:22
+ * @LastEditTime: 2024-05-31 10:53:26
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
@@ -30,11 +30,13 @@ export const Stance: Tabs[] = [
     key: 1,
     value: 1,
     label: "最终站位",
+    num: 10,
   },
   {
     key: 2,
     value: 2,
     label: "前中期",
+    num: 5,
   },
 ];
 

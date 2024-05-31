@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-27 15:40:44
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-29 13:24:02
+ * @LastEditTime: 2024-05-31 10:51:37
  * @Description: 描述
  */
 export interface Chess {
@@ -18,6 +18,7 @@ export type Tabs = {
   label: string;
   value: number | string;
   key: number | string;
+  [x: string]: any;
 };
 // let chess = {
 //   heroID: "xxx", //英雄ID
