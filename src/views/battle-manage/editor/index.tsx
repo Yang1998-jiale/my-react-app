@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-31 11:30:03
+ * @LastEditTime: 2024-05-31 11:54:04
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -19,15 +19,20 @@ type SetFn = (state: Chess[]) => Chess[] | any[];
 
 export default function Editor() {
   const [finalHeroList, setFinalHeroList] = useState<Chess[]>([]);
+  const [agoHeroList, setAgoHeroList] = useState<Chess[]>([]);
+  const [centreHeroList, setCentreHeroList] = useState<Chess[]>([]);
   const [stanceKey, setStanceKey] = useState<number | string>(1);
   const dispatch = useDispatch();
   const targetList = useMemo(() => {
     if (stanceKey === 1) {
       return finalHeroList;
-    } else {
-      return [];
+    } else if (stanceKey == 2) {
+      return agoHeroList;
+    } else if (stanceKey == 3) {
+      return centreHeroList;
     }
-  }, [stanceKey, finalHeroList]);
+    return [];
+  }, [stanceKey, finalHeroList, agoHeroList, centreHeroList]);
 
   function setTarget(setFn: SetFn) {
     if (typeof setFn !== "function") {
@@ -35,6 +40,12 @@ export default function Editor() {
     }
     if (stanceKey == 1) {
       setFinalHeroList((state) => setFn(state));
+    }
+    if (stanceKey == 2) {
+      setAgoHeroList((state) => setFn(state));
+    }
+    if (stanceKey == 3) {
+      setCentreHeroList((state) => setFn(state));
     }
   }
 
@@ -50,7 +61,7 @@ export default function Editor() {
   }
 
   function chsssListPush(target: Chess, xy: string = "") {
-    const filterHero = finalHeroList.filter((item) => item.chessType == "hero");
+    const filterHero = targetList.filter((item) => item.chessType == "hero");
     if (filterHero?.length >= 10) {
       message.error("阵容中英雄数量超过10个");
       return;
