@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 09:40:18
+ * @LastEditTime: 2024-06-04 17:20:07
  * @Description: 描述
  */
 import { getBattleInfo } from "@/store/battle";
@@ -36,7 +36,6 @@ export default function Content({ info, type, baseInfo }: Props) {
         setFormula(filterObj);
       }
     }
-    console.log(formula);
   }, [info, baseInfo]);
   if (type == "chess") {
     const raceInfo =
