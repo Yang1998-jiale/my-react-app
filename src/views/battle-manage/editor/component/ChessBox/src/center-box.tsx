@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-29 15:53:49
+ * @LastEditTime: 2024-06-12 16:43:12
  * @Description: 描述
  */
 
@@ -18,15 +18,22 @@ interface Props {
   positonKey: number;
 }
 export default function CenterBox({ info, index, positonKey = 0 }: Props) {
-  const { dropChessPosition } = useBattle();
+  const { dropChessPosition, dropReplaceChess } = useBattle();
   const { chess: chessList } = useSelector(getBattleInfo);
   const detail = chessList.find((item) => item.id == info.heroID);
 
   function dropFn(e: React.DragEvent) {
     // console.log(e);
-    const targetXY = e.dataTransfer.getData("chessXY");
+    const action = e.dataTransfer.getData("action");
+
     const xy = `${Math.floor(index / 7)},${index % 7}`;
-    dropChessPosition(targetXY, xy, positonKey);
+    if (action == "add") {
+      const chessID = e.dataTransfer.getData("chessID");
+      dropReplaceChess(xy, positonKey, chessID);
+    } else {
+      const targetXY = e.dataTransfer.getData("chessXY");
+      dropChessPosition(targetXY, xy, positonKey);
+    }
   }
 
   function ondragstart(e: React.DragEvent<HTMLDivElement>) {

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-31 11:54:04
+ * @LastEditTime: 2024-06-12 17:57:14
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -22,6 +22,7 @@ export default function Editor() {
   const [agoHeroList, setAgoHeroList] = useState<Chess[]>([]);
   const [centreHeroList, setCentreHeroList] = useState<Chess[]>([]);
   const [stanceKey, setStanceKey] = useState<number | string>(1);
+  const [maxLength, sefMaxLength] = useState<number>(10);
   const dispatch = useDispatch();
   const targetList = useMemo(() => {
     if (stanceKey === 1) {
@@ -55,6 +56,10 @@ export default function Editor() {
     dispatch(initData() as any);
   });
 
+  useEffect(() => {
+    sefMaxLength(stanceKey === 1 ? 10 : stanceKey === 2 ? 5 : 7);
+  }, [stanceKey]);
+
   function clickPushHero(heroID: string) {
     const chessObj = createHero(heroID);
     chsssListPush(chessObj);
@@ -62,7 +67,7 @@ export default function Editor() {
 
   function chsssListPush(target: Chess, xy: string = "") {
     const filterHero = targetList.filter((item) => item.chessType == "hero");
-    if (filterHero?.length >= 10) {
+    if (filterHero?.length >= maxLength) {
       message.error("阵容中英雄数量超过10个");
       return;
     }
@@ -90,6 +95,19 @@ export default function Editor() {
       });
     });
   }
+
+  function dropReplaceChess(position, key, heroID) {
+    setTarget((state) => {
+      return state.map((item) => {
+        if (item.position[key] === position) {
+          item.heroID = heroID;
+          item.equipID = [];
+        }
+        return item;
+      });
+    });
+  }
+
   function dropChessPosition(start: string, end: string, key: number) {
     setTarget((state) => {
       const startIndex = state.findIndex(
@@ -119,6 +137,7 @@ export default function Editor() {
             dropChessAdd,
             dropChessUpdate,
             dropChessPosition,
+            dropReplaceChess,
             targetList,
             setTarget,
           }}
