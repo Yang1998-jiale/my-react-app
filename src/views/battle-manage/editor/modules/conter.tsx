@@ -2,56 +2,20 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:10:27
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-12 17:23:38
+ * @LastEditTime: 2024-06-13 17:02:46
  * @Description: 描述
  */
 import Final from "../component/final-position";
 import { useBattle, Stance, PositionList } from "../util";
-import { useState, useEffect } from "react";
-import { getBattleInfo } from "@/store/battle";
-import { useSelector } from "react-redux";
+import Fetter from "../component/fetter";
+import { useState } from "react";
 
 export default function Conter() {
   const { stanceKey, setStanceKey, targetList, setTarget } = useBattle();
-  const {
-    chess: chessList,
-    // job: jobList,
-    // race: raceList,
-    // equip: equipList,
-  } = useSelector(getBattleInfo);
   const [positonKey, setPositionKey] = useState<number | string>(0);
   function getMaxNum() {
     return Stance.find((item) => item.value === stanceKey)?.num || 10;
   }
-
-  useEffect(() => {
-    const raceList = {};
-
-    const heroIds = targetList
-      .filter((item) => item.chessType === "hero")
-      .map((item) => item.heroID);
-    const heroList = chessList.filter((item) => heroIds.includes(item.id));
-
-    heroList.forEach((item) => {
-      const raceIds = item.raceIds.split(",");
-      raceIds.forEach((raceId) => {
-        if (raceList[raceId]) {
-          console.log(
-            raceList[raceId].chess.find((f) => f.heroID == item.heroID)
-          );
-
-          if (!raceList[raceId].chess.find((f) => f.id == item.id)) {
-            raceList[raceId].chess.push(item);
-          }
-        } else {
-          raceList[raceId] = {
-            chess: [item],
-          };
-        }
-      });
-    });
-    console.log(raceList);
-  }, [targetList, chessList]);
 
   return (
     <>
@@ -124,6 +88,7 @@ export default function Conter() {
             positonKey={stanceKey == 1 ? (positonKey as number) : 0}
           />
         </div>
+        <Fetter />
       </div>
     </>
   );

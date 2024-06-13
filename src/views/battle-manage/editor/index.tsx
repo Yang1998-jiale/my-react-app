@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-12 17:57:14
+ * @LastEditTime: 2024-06-13 13:31:53
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -68,7 +68,7 @@ export default function Editor() {
   function chsssListPush(target: Chess, xy: string = "") {
     const filterHero = targetList.filter((item) => item.chessType == "hero");
     if (filterHero?.length >= maxLength) {
-      message.error("阵容中英雄数量超过10个");
+      message.error(`阵容中英雄数量超过${maxLength}个`);
       return;
     }
     if (!xy) {
