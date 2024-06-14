@@ -2,11 +2,11 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:07:43
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-29 13:24:47
+ * @LastEditTime: 2024-06-14 16:38:21
  * @Description: 描述
  */
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import "../../style/chess.less";
 import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
@@ -14,7 +14,7 @@ import Chess from "../component/chess";
 import Equip from "../component/equip";
 import type { Tabs } from "@/types/battle";
 
-export default function ChessEquip() {
+function Left() {
   const [activeKey, setActiveKey] = useState<string | number>("Chess");
   const {
     chess: chessList,
@@ -83,3 +83,5 @@ export default function ChessEquip() {
     </>
   );
 }
+const ChessEquip = memo(Left);
+export default ChessEquip;

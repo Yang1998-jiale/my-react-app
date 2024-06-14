@@ -5,6 +5,7 @@
 .chess-popover {
   --antd-arrow-background-color: #03071e;
   color: #fff;
+
   .ant-popover-inner {
     background: #03071e;
     padding: 0;
@@ -41,6 +42,7 @@
       color: #fff !important;
     }
   }
+
   .ant-select-selector:hover {
     background-color: #121831 !important;
     border-color: #ce78f9 !important;
@@ -90,49 +92,68 @@
   border-radius: 4px;
 }
 
-@br1:#999;
-@br2:#5fcc29;
-@br3:#297acc;
-@br4:#cc29cc;
-@br5:#cca329;
+@br1: #999;
+@br2: #5fcc29;
+@br3: #297acc;
+@br4: #cc29cc;
+@br5: #cca329;
+
 .loopPrice(@count) when (@count>0) {
   .loopPrice((@count - 1));
-  .price-bd-@{count}{
-    @id:'br@{count}';
+
+  .price-bd-@{count} {
+    @id: 'br@{count}';
     border-color: @@id;
-  };
+  }
+
+  ;
 }
+
 .loopPrice(5);
 
-.fetter{
+.fetter {
   background-image: url('@/assets/images/sprite-img.png');
   background-repeat: no-repeat;
   background-size: 200px 176px;
 }
 
-.level-0{
-  background-position: -32px -115px;
+
+.img-icon {
+  display: inline-block;
+  vertical-align: middle;
+  webkit-filter: contrast(.1) brightness(.5);
+  filter: contrast(.1) brightness(.5);
 }
 
-.level-1{
-  background-position: -98px -115px;
+.level-0 {
+  background-position: -64px -115px;
 }
 
-.level-2{
-  background-position: -154px 1px;
+.level-1 {
+  background-position: -97px -114px;
 }
 
-.level-3{
-  background-position: -154px -36px;
+.level-2 {
+  background-position: -153px 2px;
 }
 
-.level-4{
-  background-position: -154px -73px;
+.level-3 {
+  background-position: -153px -35px;
 }
 
-.level-5{
-  background-position: -154px -110px;
+.level-4 {
+  background-position: -153px -72px;
 }
+
+.level-5 {
+  background-position: -153px -109px;
+
+  .img-icon {
+    filter: none;
+  }
+
+}
+
 // .level-2{
 //   background-position: -98px -115px;
 // }

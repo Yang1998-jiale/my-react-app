@@ -1,16 +1,17 @@
-import { Popover, Input, Select } from "antd";
+import { Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Content from "./popover-content";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 // import "../../style/chess.less";
 import { useBattle } from "../util";
 import { chessFormart } from "../util";
+import { PopoverStatus } from "@/components/Popover";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
 
 //棋子组件
-export default function Chess({ chessList, jobList, raceList }) {
+function ChessBox({ chessList, jobList, raceList }) {
   const { clickPushHero } = useBattle();
   const [chessData, setChessData]: any = useState([]);
   const [formState, setFormState] = useState<{
@@ -22,9 +23,6 @@ export default function Chess({ chessList, jobList, raceList }) {
     jobID: undefined,
     raceID: undefined,
   });
-
-
-
 
   useEffect(() => {
     const allData = chessFormart(chessList);
@@ -130,7 +128,27 @@ export default function Chess({ chessList, jobList, raceList }) {
                   <div className="flex flex w-100% flex-wrap">
                     {item.chessList.map((item) => {
                       return (
-                        <Popover
+                        // <Popover
+                        //   content={<Content info={item} type={"chess"} />}
+                        //   rootClassName={"chess-popover"}
+                        //   key={item.id}
+                        // >
+                        //   <img
+                        //     draggable="true"
+                        //     onDragStart={(e) => {
+                        //       ondragstart(e, item.id);
+                        //     }}
+                        //     onClick={() => {
+                        //       clickPushHero(item.id);
+                        //     }}
+                        //     src={minUrl + item.name}
+                        //     className={`w-50px h-50px m-r-8px m-b-8px cursor-pointer price-bd ${
+                        //       item.price ? "price-bd-" + item.price : ""
+                        //     }`}
+                        //     alt=""
+                        //   />
+                        // </Popover>
+                        <PopoverStatus
                           content={<Content info={item} type={"chess"} />}
                           rootClassName={"chess-popover"}
                           key={item.id}
@@ -149,7 +167,7 @@ export default function Chess({ chessList, jobList, raceList }) {
                             }`}
                             alt=""
                           />
-                        </Popover>
+                        </PopoverStatus>
                       );
                     })}
                   </div>
@@ -161,3 +179,5 @@ export default function Chess({ chessList, jobList, raceList }) {
     </div>
   );
 }
+const Chess = memo(ChessBox);
+export default Chess;

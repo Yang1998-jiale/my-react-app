@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-31 10:53:26
+ * @LastEditTime: 2024-06-14 16:53:12
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
@@ -35,8 +35,14 @@ export const Stance: Tabs[] = [
   {
     key: 2,
     value: 2,
-    label: "前中期",
+    label: "前期",
     num: 5,
+  },
+  {
+    key: 3,
+    value: 3,
+    label: "中期",
+    num: 7,
   },
 ];
 
@@ -101,7 +107,7 @@ export function chessFormart(target: any[]) {
   if (!target.length) return [];
   target.forEach((item) => {
     const price = Number(item.price);
-    if (item.id == "7593") {
+    if (["7965", "7593"].includes(item.id)) {
       return;
     }
     if (newTarget[price]) {

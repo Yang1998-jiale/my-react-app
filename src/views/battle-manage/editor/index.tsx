@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-13 13:31:53
+ * @LastEditTime: 2024-06-14 16:40:38
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -126,6 +126,12 @@ export default function Editor() {
     });
   }
 
+  function deleteHero(position, key) {
+    setTarget((state) => {
+      return state.filter((item) => item.position[key] !== position);
+    });
+  }
+
   return (
     <>
       <div className="w-100% h-100% details-page overflow-y-auto p-y-100px p-x-24px flex items-start">
@@ -140,6 +146,7 @@ export default function Editor() {
             dropReplaceChess,
             targetList,
             setTarget,
+            deleteHero,
           }}
         >
           <ChessEquip />

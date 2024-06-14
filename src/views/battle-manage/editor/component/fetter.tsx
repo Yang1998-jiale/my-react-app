@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-06-13 16:08:56
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-13 18:01:21
+ * @LastEditTime: 2024-06-14 16:43:08
  * @Description: 描述
  */
 import { useState, useEffect } from "react";
@@ -31,10 +31,6 @@ export default function Fetter() {
       const jobIds = item.jobIds.split(",");
       raceIds.forEach((raceId) => {
         if (raceInfo[raceId]) {
-          console.log(
-            raceInfo[raceId].chess.find((f) => f.heroID == item.heroID)
-          );
-
           if (!raceInfo[raceId].chess.find((f) => f.id == item.id)) {
             raceInfo[raceId].chess.push(item);
           }
@@ -45,7 +41,7 @@ export default function Fetter() {
         }
       });
       jobIds.forEach((jobId) => {
-        if (raceInfo[jobId]) {
+        if (jobInfo[jobId]) {
           if (!jobInfo[jobId].chess.find((f) => f.id == item.id)) {
             jobInfo[jobId].chess.push(item);
           }
@@ -56,7 +52,6 @@ export default function Fetter() {
         }
       });
     });
-    console.log(raceInfo, jobInfo);
     const raceData = Object.keys(raceInfo)
       .map((key) => {
         const race = raceList.find((r) => r.raceId == key);
@@ -89,7 +84,14 @@ export default function Fetter() {
         return undefined;
       })
       .filter((item) => item);
-    setFetterList(() => [...raceData, ...jobData]);
+    setFetterList(() =>
+      [...raceData, ...jobData].sort((a, b) => {
+        if (a.levelColor == b.levelColor) {
+          return b.chess.length - a.chess.length;
+        }
+        return b.levelColor - a.levelColor;
+      })
+    );
   }, [targetList, chessList, raceList, jobList]);
 
   function getlevelColor(target, nums) {
@@ -108,12 +110,29 @@ export default function Fetter() {
   }
   return (
     <>
-      <div className="w-100% h-100% cursor-pointer">
+      <div className="w-100% h-100% cursor-pointer flex items-center flex-wrap">
         {fetterList.map((item) => {
           return (
-            <div key={item.jobId || item.raceId}>
-              <div className={`fetter w-32px h-36px level-${item.levelColor} flex items-center justify-center`}>
-                <img src={item.imagePath} className="w-18px h-18px" alt="" />
+            <div
+              key={item.jobId || item.raceId}
+              className="flex items-center relative flex-shrink-0 m-r-12px m-b-12px"
+            >
+              <div
+                className={`fetter w-32px h-36px absolute  level-${item.levelColor}  flex items-center justify-center`}
+              >
+                <img
+                  src={item.imagePath}
+                  className="w-18px h-18px img-icon"
+                  alt=""
+                />
+              </div>
+              <div
+                className={` b-1px b-solid  p-l-16px p-r-8px m-l-16px text-14px b-#212744 p-y-2px ${
+                  item.levelColor !== 0 ? "c-#6c7493" : "c-#2f3552  "
+                }`}
+              >
+                <span className="m-x-4px">{item.chess.length}</span>
+                <span>{item.name}</span>
               </div>
             </div>
           );

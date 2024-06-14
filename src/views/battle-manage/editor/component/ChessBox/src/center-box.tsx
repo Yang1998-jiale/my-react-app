@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-12 16:43:12
+ * @LastEditTime: 2024-06-14 16:36:01
  * @Description: 描述
  */
 
@@ -18,7 +18,7 @@ interface Props {
   positonKey: number;
 }
 export default function CenterBox({ info, index, positonKey = 0 }: Props) {
-  const { dropChessPosition, dropReplaceChess } = useBattle();
+  const { dropChessPosition, dropReplaceChess, deleteHero } = useBattle();
   const { chess: chessList } = useSelector(getBattleInfo);
   const detail = chessList.find((item) => item.id == info.heroID);
 
@@ -54,7 +54,7 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
         draggable="true"
         className={`chess-box ${detail?.price ? "price-" + detail.price : ""}`}
         onClick={() => {
-          // deleteHero(info);
+          deleteHero(info.position[positonKey], positonKey);
         }}
       >
         <i
