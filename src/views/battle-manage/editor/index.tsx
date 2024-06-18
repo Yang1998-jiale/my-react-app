@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-14 16:40:38
+ * @LastEditTime: 2024-06-18 17:35:14
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -34,6 +34,16 @@ export default function Editor() {
     }
     return [];
   }, [stanceKey, finalHeroList, agoHeroList, centreHeroList]);
+  const basePosition = useMemo(() => {
+    const list: string[] = [];
+    for (let i = 0; i < maxLength; i++) {
+      list.push(`${Math.floor(i / 7)},${i % 7}`);
+    }
+    return list;
+  }, [maxLength]);
+  useEffect(() => {
+    console.log(basePosition);
+  }, [basePosition]);
 
   function setTarget(setFn: SetFn) {
     if (typeof setFn !== "function") {
@@ -82,7 +92,11 @@ export default function Editor() {
   }
 
   function dropChessAdd(target: Chess, xy: string) {
-    chsssListPush(target, xy);
+    let x = Number(xy.split(",")[0]);
+    let y = Number(xy.split(",")[1]);
+    console.log(x * 7 + y);
+
+    // chsssListPush(target, xy);
   }
 
   function dropChessUpdate(start: string, end: string, key: number) {
