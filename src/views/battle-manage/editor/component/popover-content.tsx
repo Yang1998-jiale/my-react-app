@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-04 17:20:07
+ * @LastEditTime: 2024-06-19 15:51:31
  * @Description: 描述
  */
 import { getBattleInfo } from "@/store/battle";
@@ -61,7 +61,7 @@ export default function Content({ info, type, baseInfo }: Props) {
             backgroundSize: "cover",
           }}
         ></div>
-        <div className="w-441px h-284px flex flex-col justify-be tween">
+        <div className="w-441px h-284px flex flex-col justify-between">
           <div className="flex  flex-shrink-0 h-90px">
             <div className="w-70% p-12px flex  flex-col justify-center">
               {raceJob.map((item) => (

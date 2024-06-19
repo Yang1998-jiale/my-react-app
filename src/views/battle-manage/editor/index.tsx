@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-18 17:35:14
+ * @LastEditTime: 2024-06-19 14:49:04
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -75,27 +75,40 @@ export default function Editor() {
     chsssListPush(chessObj);
   }
 
-  function chsssListPush(target: Chess, xy: string = "") {
+  function chsssListPush(target: Chess) {
     const filterHero = targetList.filter((item) => item.chessType == "hero");
     if (filterHero?.length >= maxLength) {
       message.error(`阵容中英雄数量超过${maxLength}个`);
       return;
     }
-    if (!xy) {
-      xy =
-        Math.floor(finalHeroList.length / 7) + "," + (finalHeroList.length % 7);
-    }
-    target.position = [xy, xy];
+    target.position = [getFirstPositoon(0), getFirstPositoon(1)];
     setTarget((state) => {
       return [...state, target];
     });
   }
 
-  function dropChessAdd(target: Chess, xy: string) {
-    let x = Number(xy.split(",")[0]);
-    let y = Number(xy.split(",")[1]);
-    console.log(x * 7 + y);
+  function getFirstPositoon(index): string {
+    const p = targetList.map((item) => item.position[index]);
+    const xy: string | number =
+      basePosition.find((item) => !p.includes(item)) || "0,0";
+    return xy;
+  }
 
+  function dropChessAdd(target: Chess, xy: string, key) {
+    const filterHero = targetList.filter((item) => item.chessType == "hero");
+    if (filterHero?.length >= maxLength) {
+      message.error(`阵容中英雄数量超过${maxLength}个`);
+      return;
+    }
+    // const x = Number(xy.split(",")[0]);
+    // const y = Number(xy.split(",")[1]);
+    // const len = x * 7 + y;
+    target.position = new Array(2);
+    target.position[key] = xy;
+    target.position[Math.abs(1 - key)] = getFirstPositoon(Math.abs(1 - key));
+    setTarget((state) => {
+      return [...state, target];
+    });
     // chsssListPush(target, xy);
   }
 

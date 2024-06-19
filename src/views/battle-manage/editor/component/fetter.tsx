@@ -2,13 +2,15 @@
  * @Author: yjl
  * @Date: 2024-06-13 16:08:56
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-14 16:43:08
+ * @LastEditTime: 2024-06-19 17:22:00
  * @Description: 描述
  */
 import { useState, useEffect } from "react";
 import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
 import { useBattle } from "../util";
+import { PopoverBox } from "@/components/Popover/index";
+import FetterContent from "./fetter-content";
 
 export default function Fetter() {
   const [fetterList, setFetterList] = useState<any>([]);
@@ -110,31 +112,34 @@ export default function Fetter() {
   }
   return (
     <>
-      <div className="w-100% h-100% cursor-pointer flex items-center flex-wrap">
+      <div className="w-100% h-100%  flex items-center flex-wrap">
         {fetterList.map((item) => {
           return (
-            <div
+            <PopoverBox
               key={item.jobId || item.raceId}
-              className="flex items-center relative flex-shrink-0 m-r-12px m-b-12px"
+              content={<FetterContent fetter={item} chess={chessList} />}
+              rootClassName={"chess-popover"}
             >
-              <div
-                className={`fetter w-32px h-36px absolute  level-${item.levelColor}  flex items-center justify-center`}
-              >
-                <img
-                  src={item.imagePath}
-                  className="w-18px h-18px img-icon"
-                  alt=""
-                />
+              <div className="flex items-center relative flex-shrink-0 m-r-12px m-b-12px cursor-pointer">
+                <div
+                  className={`fetter w-32px h-36px absolute  level-${item.levelColor}  flex items-center justify-center`}
+                >
+                  <img
+                    src={item.imagePath}
+                    className="w-18px h-18px img-icon"
+                    alt=""
+                  />
+                </div>
+                <div
+                  className={` b-1px b-solid  p-l-16px p-r-8px m-l-16px text-14px b-#212744 p-y-2px ${
+                    item.levelColor !== 0 ? "c-#6c7493" : "c-#2f3552  "
+                  }`}
+                >
+                  <span className="m-x-4px">{item.chess.length}</span>
+                  <span>{item.name}</span>
+                </div>
               </div>
-              <div
-                className={` b-1px b-solid  p-l-16px p-r-8px m-l-16px text-14px b-#212744 p-y-2px ${
-                  item.levelColor !== 0 ? "c-#6c7493" : "c-#2f3552  "
-                }`}
-              >
-                <span className="m-x-4px">{item.chess.length}</span>
-                <span>{item.name}</span>
-              </div>
-            </div>
+            </PopoverBox>
           );
         })}
       </div>

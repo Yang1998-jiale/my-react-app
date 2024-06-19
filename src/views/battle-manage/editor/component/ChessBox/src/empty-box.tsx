@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-13 15:25:28
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-29 15:53:44
+ * @LastEditTime: 2024-06-19 14:46:05
  * @Description: 描述
  */
 // import { useState } from "react";
@@ -23,7 +23,7 @@ export default function ChessBox({ index, positonKey = 0 }: Props) {
     if (action === "add") {
       const chessID = e.dataTransfer.getData("chessID");
       const chessObj = createHero(chessID);
-      dropChessAdd(chessObj, xy);
+      dropChessAdd(chessObj, xy, positonKey);
     } else if (action === "update") {
       const targetXY = e.dataTransfer.getData("chessXY");
       console.log(targetXY);

@@ -105,8 +105,6 @@
     @id: 'br@{count}';
     border-color: @@id;
   }
-
-  ;
 }
 
 .loopPrice(5);
@@ -154,6 +152,45 @@
 
 }
 
-// .level-2{
-//   background-position: -98px -115px;
-// }
+
+
+@bg1: #7f4f3e;
+@bg2: #818181;
+@bg3: #ae8b42;
+@bg4: #d1f3f1;
+@bg5: #ae8b42;
+@bdc1: #a5644a;
+@bdc2: #a7a399;
+@bdc3: #c6aa4f;
+@bdc4: #60dace;
+@bdc5: #a5644a;
+
+.loopLevel(@count) when (@count>0) {
+  .loopLevel((@count - 1));
+
+  .level-color-@{count} {
+    @bg: 'bg@{count}';
+    @bdc: 'bdc@{count}';
+    background-color: @@bg;
+    border-color: @@bdc;
+  }
+}
+
+.loopLevel(5);
+
+@chessBd1: #999;
+@chessBd2: #5fcc29;
+@chessBd3: #297acc;
+@chessBd4: #cc29cc;
+@chessBd5: #cca329;
+
+.loopChessBd(@count) when (@count>0) {
+  .loopChessBd((@count - 1));
+
+  .chess-bd-@{count} {
+    @bd: 'chessBd@{count}';
+    border-color: @@bd;
+  }
+}
+
+.loopChessBd(5);
