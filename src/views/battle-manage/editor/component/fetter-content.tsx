@@ -1,8 +1,10 @@
+import { memo } from "react";
+
 /*
  * @Author: yjl
  * @Date: 2024-06-19 15:49:59
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-19 17:40:40
+ * @LastEditTime: 2024-06-19 17:53:59
  * @Description: 描述
  */
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
@@ -11,7 +13,7 @@ interface Props {
   fetter: any;
   chess: any[];
 }
-export default function FetterContent({ fetter, chess }: Props) {
+function Content({ fetter, chess }: Props) {
   function getLevelColor(key) {
     const target = fetter.job_color_list || fetter.race_color_list;
     const findLevel = target
@@ -95,3 +97,5 @@ export default function FetterContent({ fetter, chess }: Props) {
     </>
   );
 }
+const FetterContent = memo(Content);
+export default FetterContent;
