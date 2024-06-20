@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-14 16:53:12
+ * @LastEditTime: 2024-06-20 16:58:16
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
@@ -14,7 +14,7 @@ export function createHero(heroID: string, chessType: string = "hero"): Chess {
   return {
     chessType,
     heroID,
-    equipID: [],
+    equipID: new Array(3).fill(""),
     position: [],
     isCarry: false,
     isChosen: false,
@@ -120,4 +120,8 @@ export function chessFormart(target: any[]) {
     }
   });
   return newTarget.filter((item) => item?.price);
+}
+
+export function getEquipInfo(equipId: string | number, target: any[]) {
+  return target.find((item) => item.id === equipId);
 }

@@ -2,30 +2,48 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-14 16:36:01
+ * @LastEditTime: 2024-06-20 17:21:10
  * @Description: 描述
  */
 
-const baseURl = import.meta.env.VITE_APP_BASE_URL;
-const minUrl = baseURl + "act/img/tft/champions/";
 import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
 import { useBattle } from "@/views/battle-manage/editor/util";
 import type { Chess } from "@/types/battle";
+import EquipItem from "./equip-item";
+import { message } from "antd";
+
+const baseURl = import.meta.env.VITE_APP_BASE_URL;
+const minUrl = baseURl + "act/img/tft/champions/";
 interface Props {
   info: Chess;
   index: number;
   positonKey: number;
 }
+
+function Star() {
+  return <div className="w-12px h-20px star-box"></div>;
+}
 export default function CenterBox({ info, index, positonKey = 0 }: Props) {
-  const { dropChessPosition, dropReplaceChess, deleteHero } = useBattle();
-  const { chess: chessList } = useSelector(getBattleInfo);
+  const { dropChessPosition, dropReplaceChess, deleteHero, updateChessEquip } =
+    useBattle();
+  const { chess: chessList, equip: equipList } = useSelector(getBattleInfo);
   const detail = chessList.find((item) => item.id == info.heroID);
+  console.log(info.equipID);
 
   function dropFn(e: React.DragEvent) {
-    // console.log(e);
-    const action = e.dataTransfer.getData("action");
+    const type = e.dataTransfer.getData("type");
 
+    if (type == "equip") {
+      const equipID = e.dataTransfer.getData("equipID");
+      addEquip(equipID);
+    } else {
+      dropChess(e);
+    }
+  }
+
+  function dropChess(e: React.DragEvent) {
+    const action = e.dataTransfer.getData("action");
     const xy = `${Math.floor(index / 7)},${index % 7}`;
     if (action == "add") {
       const chessID = e.dataTransfer.getData("chessID");
@@ -36,11 +54,47 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
     }
   }
 
+  function addEquip(equipID) {
+    const emptyIndex = info.equipID.findIndex((item) => !item);
+    if (emptyIndex == -1) {
+      return;
+    }
+    const equipData = getEquipInfo(equipID);
+    if (
+      Number(equipData.raceId) &&
+      (detail.raceIds.includes(equipData.raceId) ||
+        info.equipID.includes(equipData.id))
+    ) {
+      message.error("拥有相同羁绊的英雄无法穿戴该装备");
+      return;
+    }
+    if (
+      Number(equipData.jobId) &&
+      (detail.jobIds.includes(equipData.jobId) ||
+        info.equipID.includes(equipData.id))
+    ) {
+      message.error("拥有相同羁绊的英雄无法穿戴该装备");
+      return;
+    }
+    info.equipID[emptyIndex] = equipID;
+    updateChessEquip(info, positonKey);
+  }
+
   function ondragstart(e: React.DragEvent<HTMLDivElement>) {
     const dt = e.dataTransfer;
     dt.setData("chessXY", info.position[positonKey] as string);
     dt.setData("action", "update");
   }
+
+  function getEquipInfo(equipID: string | undefined) {
+    if (!equipID) {
+      return undefined;
+    }
+    const equip = equipList.find((item) => item.id == equipID);
+    return equip;
+  }
+
+  function deleteEquip(index) {}
 
   return (
     <>
@@ -52,7 +106,9 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
           ondragstart(e);
         }}
         draggable="true"
-        className={`chess-box ${detail?.price ? "price-" + detail.price : ""}`}
+        className={`chess-box ${
+          detail?.price ? "price-" + detail.price : ""
+        } relative`}
         onClick={() => {
           deleteHero(info.position[positonKey], positonKey);
         }}
@@ -61,6 +117,22 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
           className="w-100% h-100% bg-img "
           style={{ background: `url(${minUrl + detail?.name})` }}
         ></i>
+        {info.isChosen ? (
+          <div className="absolute top-[-7px] left-50% translate-x-[-48%] z-100 flex items-center">
+            <Star /> <Star /> <Star />
+          </div>
+        ) : (
+          <div className="absolute top-[-7px] left-50% translate-x-[-50%] z-100 flex items-center">
+            <Star />
+          </div>
+        )}
+        <div className="flex items-center absolute bottom-[2px] left-50%  translate-[-50%,50%] z-100">
+          {info.equipID.map((item, index) => {
+            return (
+              <EquipItem equipInfo={getEquipInfo(item)} key={item + index} />
+            );
+          })}
+        </div>
       </div>
     </>
   );

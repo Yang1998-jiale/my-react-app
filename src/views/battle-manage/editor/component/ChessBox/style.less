@@ -32,8 +32,19 @@
 
 .loopPriceBg(@count) when (@count>0) {
   .loopPriceBg((@count - 1));
+
   .price-@{count}::after {
     background-image: url("@/assets/images/icon-price-@{count}.png");
   }
 }
+
 .loopPriceBg(5);
+
+
+.star-box {
+  background-image: url('@/assets/images/sprite-img.png');
+  background-repeat: no-repeat;
+  background-size: 200px 176px;
+  // background-position: -78px -155px;
+  background-position: -187px 0px;
+}

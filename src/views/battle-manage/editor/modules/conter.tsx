@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:10:27
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-13 17:02:46
+ * @LastEditTime: 2024-06-20 15:36:03
  * @Description: 描述
  */
 import Final from "../component/final-position";
@@ -11,11 +11,12 @@ import Fetter from "../component/fetter";
 import { useState } from "react";
 
 export default function Conter() {
-  const { stanceKey, setStanceKey, targetList, setTarget } = useBattle();
+  const { stanceKey, setStanceKey, targetList, setTarget, maxLength } =
+    useBattle();
   const [positonKey, setPositionKey] = useState<number | string>(0);
-  function getMaxNum() {
-    return Stance.find((item) => item.value === stanceKey)?.num || 10;
-  }
+  // function getMaxNum() {
+  //   return Stance.find((item) => item.value === stanceKey)?.num || 10;
+  // }
 
   return (
     <>
@@ -27,7 +28,7 @@ export default function Conter() {
               人口数:
               {targetList.filter((item) => item.chessType == "hero")?.length ||
                 0}
-              /{getMaxNum()}
+              /{maxLength}
             </span>
           </div>
           <div className="flex items-center m-r-16px">

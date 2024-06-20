@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-19 15:51:31
+ * @LastEditTime: 2024-06-20 15:25:40
  * @Description: 描述
  */
 import { getBattleInfo } from "@/store/battle";
@@ -108,10 +108,10 @@ export default function Content({ info, type, baseInfo }: Props) {
           <div className="b-t-1px b-t-solid b-t-#c0c0c050 m-t-16px flex items-center p-t-16px">
             <span className="text-16px m-r-8px">合成:</span>
             <div>
-              {formula.map((item: any) => (
+              {formula.map((item: any, index) => (
                 <img
                   src={item?.imagePath}
-                  key={item.id}
+                  key={item.id + "" + index}
                   alt=""
                   className="w-40px w-40px m-r-8px"
                 />

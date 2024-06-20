@@ -2,13 +2,13 @@
  * @Author: yjl
  * @Date: 2024-05-27 15:40:44
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-31 10:51:37
+ * @LastEditTime: 2024-06-20 17:18:38
  * @Description: 描述
  */
 export interface Chess {
   chessType: string;
   heroID: number | string;
-  equipID: string | number[] | string[];
+  equipID: string[];
   position: number[] | string[];
   isCarry: boolean;
   isChosen: boolean;

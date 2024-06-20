@@ -2,22 +2,21 @@
  * @Author: yjl
  * @Date: 2024-05-09 22:46:45
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-29 13:50:39
+ * @LastEditTime: 2024-06-20 14:23:14
  * @Description: 描述
  */
 
 import { Input } from "antd";
 // import Content from "./popover-content";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { getGroupByKey } from "@/utils/index";
-import { Popover } from "antd";
 import Content from "./popover-content";
 import { EquipType } from "../util";
 import type { Tabs } from "@/types/battle";
+import { PopoverStatus } from "@/components/Popover";
 
-export default function Equip({ equipList }) {
-  const groupEquip = getGroupByKey(equipList, "type");
+function EquipBox({ equipList }) {
   const [formState, setFormState] = useState<{
     keyword: string | undefined;
     activeKey: number | undefined | string;
@@ -26,11 +25,13 @@ export default function Equip({ equipList }) {
     activeKey: 1,
   });
   const [equipInfo, setEquipInfo] = useState<any>([]);
+  const [groupEquip, setGroupEquip] = useState<any>([]);
   function tabChange(record: Tabs) {
     setFormState({ keyword: undefined, activeKey: record.value });
   }
 
   useEffect(() => {
+    const groupEquipList = getGroupByKey(equipList, "type");
     const { keyword, activeKey } = formState;
     let filterEquip = equipList;
     if (keyword) {
@@ -42,17 +43,25 @@ export default function Equip({ equipList }) {
     }
     if (activeKey) {
       filterEquip =
-        groupEquip.find((item) => activeKey == item.type)?.value || [];
+        groupEquipList.find((item) => activeKey == item.type)?.value || [];
     }
     setEquipInfo(filterEquip);
-    console.log(filterEquip);
-  }, [equipList, formState, groupEquip]);
+    setGroupEquip(groupEquipList);
+  }, [equipList, formState]);
+
+  function ondragstart(e: React.DragEvent<HTMLDivElement>, id: string) {
+    const dt = e.dataTransfer;
+    dt.setData("equipID", id);
+    dt.setData("type", "equip");
+  }
 
   return (
     <div className="w-100% h-100% flex flex-col relative ">
       <div className="sticky top-0 left-0 ">
         <Input
-          onChange={({ target: { value } }:React.ChangeEvent<HTMLInputElement>) => {
+          onChange={({
+            target: { value },
+          }: React.ChangeEvent<HTMLInputElement>) => {
             setFormState({ activeKey: value ? undefined : 1, keyword: value });
           }}
           prefix={<SearchOutlined />}
@@ -83,10 +92,10 @@ export default function Equip({ equipList }) {
           })}
         </div>
       </div>
-      <div className="flex-1 w-100% overflow-y-auto left-box">
+      <div className="w-100% flex flex-wrap overflow-y-auto left-box">
         {equipInfo.map((item) => {
           return (
-            <Popover
+            <PopoverStatus
               rootClassName={"chess-popover"}
               key={item.id}
               content={
@@ -99,13 +108,21 @@ export default function Equip({ equipList }) {
             >
               <img
                 src={item.imagePath}
+                draggable="true"
+                onDragStart={(e) => {
+                  ondragstart(e, item.id);
+                }}
                 className="w-44px h-44px m-r-8px m-b-8px cursor-pointer"
                 alt=""
               />
-            </Popover>
+            </PopoverStatus>
           );
         })}
       </div>
     </div>
   );
 }
+
+const Equip = memo(EquipBox);
+
+export default Equip;

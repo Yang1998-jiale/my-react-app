@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-19 14:49:04
+ * @LastEditTime: 2024-06-20 15:35:23
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -22,7 +22,7 @@ export default function Editor() {
   const [agoHeroList, setAgoHeroList] = useState<Chess[]>([]);
   const [centreHeroList, setCentreHeroList] = useState<Chess[]>([]);
   const [stanceKey, setStanceKey] = useState<number | string>(1);
-  const [maxLength, sefMaxLength] = useState<number>(10);
+  const [maxLength, setMaxLength] = useState<number>(10);
   const dispatch = useDispatch();
   const targetList = useMemo(() => {
     if (stanceKey === 1) {
@@ -41,9 +41,6 @@ export default function Editor() {
     }
     return list;
   }, [maxLength]);
-  useEffect(() => {
-    console.log(basePosition);
-  }, [basePosition]);
 
   function setTarget(setFn: SetFn) {
     if (typeof setFn !== "function") {
@@ -60,15 +57,18 @@ export default function Editor() {
     }
   }
 
-  // function setTargetValue() {}
+  useEffect(() => {
+    const len = targetList.reduce((pre, item) => {
+      return (pre += item.equipID.filter((f) => f === "27734").length);
+    }, 0);
+
+    const baseLen = stanceKey === 1 ? 10 : stanceKey === 2 ? 5 : 7;
+    setMaxLength(baseLen + len);
+  }, [targetList, stanceKey]);
 
   useEffect(() => {
     dispatch(initData() as any);
   });
-
-  useEffect(() => {
-    sefMaxLength(stanceKey === 1 ? 10 : stanceKey === 2 ? 5 : 7);
-  }, [stanceKey]);
 
   function clickPushHero(heroID: string) {
     const chessObj = createHero(heroID);
@@ -100,16 +100,12 @@ export default function Editor() {
       message.error(`阵容中英雄数量超过${maxLength}个`);
       return;
     }
-    // const x = Number(xy.split(",")[0]);
-    // const y = Number(xy.split(",")[1]);
-    // const len = x * 7 + y;
     target.position = new Array(2);
     target.position[key] = xy;
     target.position[Math.abs(1 - key)] = getFirstPositoon(Math.abs(1 - key));
     setTarget((state) => {
       return [...state, target];
     });
-    // chsssListPush(target, xy);
   }
 
   function dropChessUpdate(start: string, end: string, key: number) {
@@ -159,6 +155,17 @@ export default function Editor() {
     });
   }
 
+  function updateChessEquip(chess, key) {
+    setTarget((state) => {
+      return state.map((item) => {
+        if (item.position[key] === chess.position[key]) {
+          return chess;
+        }
+        return item;
+      });
+    });
+  }
+
   return (
     <>
       <div className="w-100% h-100% details-page overflow-y-auto p-y-100px p-x-24px flex items-start">
@@ -174,6 +181,8 @@ export default function Editor() {
             targetList,
             setTarget,
             deleteHero,
+            updateChessEquip,
+            maxLength,
           }}
         >
           <ChessEquip />

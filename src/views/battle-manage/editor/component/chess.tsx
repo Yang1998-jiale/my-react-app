@@ -58,6 +58,7 @@ function ChessBox({ chessList, jobList, raceList }) {
     const dt = e.dataTransfer;
     dt.setData("chessID", id);
     dt.setData("action", "add");
+    dt.setData("type", "chess");
   }
 
   return (
@@ -128,26 +129,6 @@ function ChessBox({ chessList, jobList, raceList }) {
                   <div className="flex flex w-100% flex-wrap">
                     {item.chessList.map((item) => {
                       return (
-                        // <Popover
-                        //   content={<Content info={item} type={"chess"} />}
-                        //   rootClassName={"chess-popover"}
-                        //   key={item.id}
-                        // >
-                        //   <img
-                        //     draggable="true"
-                        //     onDragStart={(e) => {
-                        //       ondragstart(e, item.id);
-                        //     }}
-                        //     onClick={() => {
-                        //       clickPushHero(item.id);
-                        //     }}
-                        //     src={minUrl + item.name}
-                        //     className={`w-50px h-50px m-r-8px m-b-8px cursor-pointer price-bd ${
-                        //       item.price ? "price-bd-" + item.price : ""
-                        //     }`}
-                        //     alt=""
-                        //   />
-                        // </Popover>
                         <PopoverStatus
                           content={<Content info={item} type={"chess"} />}
                           rootClassName={"chess-popover"}

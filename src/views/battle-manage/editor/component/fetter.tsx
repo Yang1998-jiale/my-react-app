@@ -2,13 +2,13 @@
  * @Author: yjl
  * @Date: 2024-06-13 16:08:56
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-19 17:22:00
+ * @LastEditTime: 2024-06-20 17:32:20
  * @Description: 描述
  */
 import { useState, useEffect } from "react";
 import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
-import { useBattle } from "../util";
+import { useBattle, getEquipInfo } from "../util";
 import { PopoverBox } from "@/components/Popover/index";
 import FetterContent from "./fetter-content";
 
@@ -19,6 +19,7 @@ export default function Fetter() {
     chess: chessList,
     job: jobList,
     race: raceList,
+    equip: equipList,
   } = useSelector(getBattleInfo);
   useEffect(() => {
     const raceInfo = {};
@@ -28,9 +29,43 @@ export default function Fetter() {
       .map((item) => item.heroID);
     const heroList = chessList.filter((item) => heroIds.includes(item.id));
 
+    const equipIds = targetList
+      .reduce((pre, item) => {
+        return [...pre, ...item.equipID];
+      }, [])
+      .filter((item) => item);
+    equipIds.forEach((item) => {
+      const equip = getEquipInfo(item, equipList);
+      console.log(equip);
+
+      if (Number(equip.raceId)) {
+        if (raceInfo[equip.raceId]) {
+          raceInfo[equip.raceId].equip.push({
+            equip,
+          });
+        } else {
+          raceInfo[equip.raceId] = {
+            equip: [equip],
+            chess: [],
+          };
+        }
+      }
+      if (Number(equip.jobId)) {
+        if (jobInfo[equip.jobId]) {
+          jobInfo[equip.jobId].equip.push(equip);
+        } else {
+          jobInfo[equip.jobId] = {
+            equip: [equip],
+            chess: [],
+          };
+        }
+      }
+    });
+
     heroList.forEach((item) => {
       const raceIds = item.raceIds.split(",");
       const jobIds = item.jobIds.split(",");
+      //查找特质
       raceIds.forEach((raceId) => {
         if (raceInfo[raceId]) {
           if (!raceInfo[raceId].chess.find((f) => f.id == item.id)) {
@@ -42,6 +77,7 @@ export default function Fetter() {
           };
         }
       });
+      //查找职业
       jobIds.forEach((jobId) => {
         if (jobInfo[jobId]) {
           if (!jobInfo[jobId].chess.find((f) => f.id == item.id)) {
@@ -54,33 +90,36 @@ export default function Fetter() {
         }
       });
     });
+    //根据特质id 生成羁绊数
     const raceData = Object.keys(raceInfo)
       .map((key) => {
         const race = raceList.find((r) => r.raceId == key);
         if (race) {
+          let num =
+            raceInfo[key].chess.length + (raceInfo[key]?.equip?.length || 0);
           return {
             ...race,
-            levelColor: getlevelColor(
-              race.race_color_list,
-              raceInfo[key].chess.length
-            ),
-            chess: raceInfo[key].chess,
+            levelColor: getlevelColor(race.race_color_list, num),
+            num,
           };
         }
         return undefined;
       })
       .filter((item) => item);
+    //根据职业id 生成羁绊数
     const jobData = Object.keys(jobInfo)
       .map((key) => {
         const job = jobList.find((r) => r.jobId == key);
         if (job) {
+          let num =
+            jobInfo[key].chess.length + (jobInfo[key]?.equip?.length || 0);
           return {
             ...job,
             levelColor: getlevelColor(
               job.job_color_list,
               jobInfo[key].chess.length
             ),
-            chess: jobInfo[key].chess,
+            num,
           };
         }
         return undefined;
@@ -89,7 +128,7 @@ export default function Fetter() {
     setFetterList(() =>
       [...raceData, ...jobData].sort((a, b) => {
         if (a.levelColor == b.levelColor) {
-          return b.chess.length - a.chess.length;
+          return b.num - a.num;
         }
         return b.levelColor - a.levelColor;
       })
@@ -110,6 +149,7 @@ export default function Fetter() {
 
     return level;
   }
+
   return (
     <>
       <div className="w-100% h-100%  flex items-center flex-wrap">
@@ -135,7 +175,7 @@ export default function Fetter() {
                     item.levelColor !== 0 ? "c-#6c7493" : "c-#2f3552  "
                   }`}
                 >
-                  <span className="m-x-4px">{item.chess.length}</span>
+                  <span className="m-x-4px">{item.num}</span>
                   <span>{item.name}</span>
                 </div>
               </div>
