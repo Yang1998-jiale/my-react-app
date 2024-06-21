@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 17:21:10
+ * @LastEditTime: 2024-06-21 17:44:51
  * @Description: 描述
  */
 
@@ -12,6 +12,9 @@ import { useBattle } from "@/views/battle-manage/editor/util";
 import type { Chess } from "@/types/battle";
 import EquipItem from "./equip-item";
 import { message } from "antd";
+import BattleModal from "@/components/Modal/BattleModal";
+import EquipConter from "../../../modal/equip-conter";
+import { useState } from "react";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -29,7 +32,7 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
     useBattle();
   const { chess: chessList, equip: equipList } = useSelector(getBattleInfo);
   const detail = chessList.find((item) => item.id == info.heroID);
-  console.log(info.equipID);
+  const [equipModalOpen, setEquipModalOpen] = useState(false);
 
   function dropFn(e: React.DragEvent) {
     const type = e.dataTransfer.getData("type");
@@ -94,10 +97,18 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
     return equip;
   }
 
-  function deleteEquip(index) {}
+  function equipClick(index, action) {
+    if (action == "delete") {
+      info.equipID = info.equipID.filter((_item, i) => i != index);
+      info.equipID.push("");
+      updateChessEquip(info, positonKey);
+    } else if (action == "add") {
+      setEquipModalOpen(true);
+    }
+  }
 
   return (
-    <>
+    <div className="relative">
       <div
         onDrop={(e) => {
           dropFn(e);
@@ -106,34 +117,48 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
           ondragstart(e);
         }}
         draggable="true"
-        className={`chess-box ${
-          detail?.price ? "price-" + detail.price : ""
-        } relative`}
         onClick={() => {
           deleteHero(info.position[positonKey], positonKey);
         }}
+        className={`chess-box  relative ${
+          detail?.price ? "price-" + detail.price : ""
+        } z-11`}
       >
         <i
-          className="w-100% h-100% bg-img "
+          className={`w-100% h-100% bg-img  `}
           style={{ background: `url(${minUrl + detail?.name})` }}
         ></i>
-        {info.isChosen ? (
-          <div className="absolute top-[-7px] left-50% translate-x-[-48%] z-100 flex items-center">
-            <Star /> <Star /> <Star />
-          </div>
-        ) : (
-          <div className="absolute top-[-7px] left-50% translate-x-[-50%] z-100 flex items-center">
-            <Star />
-          </div>
-        )}
-        <div className="flex items-center absolute bottom-[2px] left-50%  translate-[-50%,50%] z-100">
-          {info.equipID.map((item, index) => {
-            return (
-              <EquipItem equipInfo={getEquipInfo(item)} key={item + index} />
-            );
-          })}
-        </div>
       </div>
-    </>
+      {info.isChosen ? (
+        <div className="absolute top-[-7px] left-50% translate-x-[-48%] z-100 flex items-center">
+          <Star /> <Star /> <Star />
+        </div>
+      ) : (
+        <div className="absolute top-[-7px] left-50% translate-x-[-50%] z-100 flex items-center">
+          <Star />
+        </div>
+      )}
+      <div className="flex items-center absolute bottom-[2px] left-50%  translate-[-50%,50%] z-100">
+        {new Array(3).fill("").map((item, index) => {
+          return (
+            <EquipItem
+              equipInfo={getEquipInfo(info.equipID[index])}
+              clickFn={equipClick}
+              index={index}
+              key={item + index}
+            />
+          );
+        })}
+      </div>
+      <BattleModal
+        footer={null}
+        open={equipModalOpen}
+        title="装备"
+        width="700px"
+        centered
+      >
+        <EquipConter type="all" />
+      </BattleModal>
+    </div>
   );
 }

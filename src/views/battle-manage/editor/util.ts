@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 16:58:16
+ * @LastEditTime: 2024-06-21 13:18:10
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
@@ -14,7 +14,7 @@ export function createHero(heroID: string, chessType: string = "hero"): Chess {
   return {
     chessType,
     heroID,
-    equipID: new Array(3).fill(""),
+    equipID: new Array(5).fill(""),
     position: [],
     isCarry: false,
     isChosen: false,
