@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-15 11:56:14
+ * @LastEditTime: 2024-06-24 17:48:24
  * @Description: 描述
 -->
 1.写一个auto-router：自动收集指定目录下的指定文件,模拟ssr，目录下每一个文件夹就是一个路由
@@ -26,3 +26,10 @@
       使用中遇到的问题
         1.在wujie主应用中引用的子应用如果有弹窗类组件比如antd的 modal message组件 这些组件的本质是在dom中真实的创一个dom结构,所以当页面首次使用后dom在主应用的dom中创建了实例 但没有销毁,子应用再次使用这个弹窗的时候就无法弹出 解决方法是 再子应用的wujie生命周期中主动销毁
         2.wujie使用过程中如果子应用有一些全局指令和全局组件 需要在子应用的wujie生命周期重新注册
+
+
+<!-- 提交取消/代理 -->
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+git config --global https.proxy http://127.0.0.1:7890
+git config --global https.proxy https://127.0.0.1:7890
