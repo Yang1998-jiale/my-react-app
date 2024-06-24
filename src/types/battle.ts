@@ -2,9 +2,10 @@
  * @Author: yjl
  * @Date: 2024-05-27 15:40:44
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 17:18:38
+ * @LastEditTime: 2024-06-24 17:44:26
  * @Description: 描述
  */
+
 export interface Chess {
   chessType: string;
   heroID: number | string;
@@ -28,3 +29,15 @@ export type Tabs = {
 //   isCarry: false, //是否是主C
 //   isChosen: false, //是否优先三星
 // };
+// interface Alternative {
+//   orginChess: string;
+//   alternativeChess: string;
+// }
+// interface Simulator {
+//   finalList: Chess[]; //最终站位
+//   beforeList?: Chess[]; //前期站位
+//   centreList?: Chess[]; //中期站位
+//   hexList?: string[]; //海克斯列表
+//   alternativeList: Alternative[]; //备选
+//   robEquipList: string[]; //优先抢装
+// }

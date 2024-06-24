@@ -2,18 +2,19 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 15:35:23
+ * @LastEditTime: 2024-06-24 17:44:30
  * @Description: 描述
  */
 import "../style/editor.css";
-import ChessEquip from "./modules/left";
+import SimulatorLeft from "./modules/left";
 import { useDispatch } from "react-redux";
 import { initData } from "@/store/battle";
 import { useEffect, useState, useMemo } from "react";
-import Conter from "./modules/conter";
+import SimulatorConter from "./modules/conter";
 import { message } from "antd";
 import type { Chess } from "@/types/battle";
 import { BattleContext, createHero } from "./util";
+import SimulatorRight from "./modules/right";
 
 type SetFn = (state: Chess[]) => Chess[] | any[];
 
@@ -23,6 +24,8 @@ export default function Editor() {
   const [centreHeroList, setCentreHeroList] = useState<Chess[]>([]);
   const [stanceKey, setStanceKey] = useState<number | string>(1);
   const [maxLength, setMaxLength] = useState<number>(10);
+
+  // const [analyseData, setAnalyseData] = useState({});
   const dispatch = useDispatch();
   const targetList = useMemo(() => {
     if (stanceKey === 1) {
@@ -168,7 +171,7 @@ export default function Editor() {
 
   return (
     <>
-      <div className="w-100% h-100% details-page overflow-y-auto p-y-100px p-x-24px flex items-start">
+      <div className="w-100% h-100% details-page overflow-y-auto p-t-120px p-b-80px p-x-24px flex items-start">
         <BattleContext.Provider
           value={{
             stanceKey,
@@ -185,9 +188,9 @@ export default function Editor() {
             maxLength,
           }}
         >
-          <ChessEquip />
-          <Conter />
-          <div className="w-35% flex-shrink-0"></div>
+          <SimulatorLeft />
+          <SimulatorConter />
+          <SimulatorRight />
         </BattleContext.Provider>
       </div>
     </>

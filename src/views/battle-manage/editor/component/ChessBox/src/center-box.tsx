@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-21 17:44:51
+ * @LastEditTime: 2024-06-24 11:20:46
  * @Description: 描述
  */
 
@@ -107,6 +107,14 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
     }
   }
 
+  function equipSelect(equipID: undefined | string, _equipInfo?: any) {
+    if (equipID) {
+      // console.log(equipID);
+      addEquip(equipID);
+    }
+    setEquipModalOpen(false);
+  }
+
   return (
     <div className="relative">
       <div
@@ -156,8 +164,12 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
         title="装备"
         width="700px"
         centered
+        // destroyOnClose={true}
+        onCancel={() => {
+          setEquipModalOpen(false);
+        }}
       >
-        <EquipConter type="all" />
+        <EquipConter type="all" onSelect={equipSelect} />
       </BattleModal>
     </div>
   );
