@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-24 17:44:30
+ * @LastEditTime: 2024-06-25 14:01:26
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -12,7 +12,7 @@ import { initData } from "@/store/battle";
 import { useEffect, useState, useMemo } from "react";
 import SimulatorConter from "./modules/conter";
 import { message } from "antd";
-import type { Chess } from "@/types/battle";
+import type { Chess, AnalyseInfo } from "@/types/battle";
 import { BattleContext, createHero } from "./util";
 import SimulatorRight from "./modules/right";
 
@@ -25,7 +25,14 @@ export default function Editor() {
   const [stanceKey, setStanceKey] = useState<number | string>(1);
   const [maxLength, setMaxLength] = useState<number>(10);
 
-  // const [analyseData, setAnalyseData] = useState({});
+  const [analyseData, setAnalyseData] = useState<AnalyseInfo>({
+    robEquip: new Array(5).fill(""),
+    hexAnalyse: {
+      hexList: [],
+      alternative: [],
+    },
+    alternativeList: [],
+  });
   const dispatch = useDispatch();
   const targetList = useMemo(() => {
     if (stanceKey === 1) {
@@ -186,6 +193,8 @@ export default function Editor() {
             deleteHero,
             updateChessEquip,
             maxLength,
+            analyseData,
+            setAnalyseData,
           }}
         >
           <SimulatorLeft />

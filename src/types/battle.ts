@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-27 15:40:44
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-24 17:44:26
+ * @LastEditTime: 2024-06-25 13:52:47
  * @Description: 描述
  */
 
@@ -21,6 +21,16 @@ export type Tabs = {
   key: number | string;
   [x: string]: any;
 };
+
+type HexAnalyse = {
+  hexList: string[];
+  alternative?: string[];
+};
+export interface AnalyseInfo {
+  robEquip: string[]; //抢装
+  hexAnalyse: HexAnalyse; //海克斯列表
+  alternativeList: string[]; //备选英雄
+}
 // let chess = {
 //   heroID: "xxx", //英雄ID
 //   equipID: "xxx,xxx,xxx", //装备ID
