@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-24 11:20:46
+ * @LastEditTime: 2024-06-27 17:53:45
  * @Description: 描述
  */
 
@@ -15,6 +15,7 @@ import { message } from "antd";
 import BattleModal from "@/components/Modal/BattleModal";
 import EquipConter from "../../../modal/equip-conter";
 import { useState } from "react";
+import carryIcon from "@/assets/images/icon-carry-hero.png";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -158,6 +159,11 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
           );
         })}
       </div>
+      {info.isCarry && (
+        <div className="w-20px h-23px absolute top-50% right-0 translate-[50%,-50%] z-101">
+          <img src={carryIcon} alt="" className="w-100% h-100%" />
+        </div>
+      )}
       <BattleModal
         footer={null}
         open={equipModalOpen}
