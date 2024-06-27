@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 15:25:40
+ * @LastEditTime: 2024-06-27 10:49:00
  * @Description: 描述
  */
 import { getBattleInfo } from "@/store/battle";

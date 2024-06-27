@@ -2,16 +2,15 @@
  * @Author: yjl
  * @Date: 2024-05-09 22:46:45
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 14:23:14
+ * @LastEditTime: 2024-06-27 10:48:38
  * @Description: 描述
  */
 
 import { Input } from "antd";
-// import Content from "./popover-content";
 import { useState, useEffect, memo } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { getGroupByKey } from "@/utils/index";
-import Content from "./popover-content";
+import Content from "../modal/popover-content";
 import { EquipType } from "../util";
 import type { Tabs } from "@/types/battle";
 import { PopoverStatus } from "@/components/Popover";

@@ -2,11 +2,13 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-21 13:18:10
+ * @LastEditTime: 2024-06-27 11:57:21
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
 import type { Chess, Tabs } from "@/types/battle";
+const baseURl = import.meta.env.VITE_APP_BASE_URL;
+const minUrl = baseURl + "act/img/tft/champions/";
 
 export const BattleContext = createContext<any>(null);
 
@@ -124,4 +126,16 @@ export function chessFormart(target: any[]) {
 
 export function getEquipInfo(equipId: string | number, target: any[]) {
   return target.find((item) => item.id === equipId);
+}
+
+export function getHeroInfo(heroId: string | number, target: any[]) {
+  let findObj = target.find((item) => item.id === heroId);
+  if (findObj) {
+    let obj = {
+      ...findObj,
+      imagePath: minUrl + findObj.name,
+    };
+    return obj;
+  }
+  return;
 }

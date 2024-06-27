@@ -1,6 +1,6 @@
 import { Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import Content from "./popover-content";
+import Content from "../modal/popover-content";
 import { useState, useEffect, memo } from "react";
 // import "../../style/chess.less";
 import { useBattle } from "../util";
@@ -122,12 +122,12 @@ function ChessBox({ chessList, jobList, raceList }) {
       </div>
       <div className="left-box flex-1 m-t-8px overflow-auto">
         {chessData.length
-          ? chessData.map((item: any) => {
+          ? chessData.map((group: any) => {
               return (
-                <div className="c-#fff" key={item.price}>
-                  <h4 className="!m-t-0 m-b-8px">{item.price + "费"}</h4>
+                <div className="c-#fff" key={group.price}>
+                  <h4 className="!m-t-0 m-b-8px">{group.price + "费"}</h4>
                   <div className="flex flex w-100% flex-wrap">
-                    {item.chessList.map((item) => {
+                    {group.chessList.map((item) => {
                       return (
                         <PopoverStatus
                           content={<Content info={item} type={"chess"} />}

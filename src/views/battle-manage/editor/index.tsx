@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-25 14:01:26
+ * @LastEditTime: 2024-06-27 16:49:04
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -16,14 +16,18 @@ import type { Chess, AnalyseInfo } from "@/types/battle";
 import { BattleContext, createHero } from "./util";
 import SimulatorRight from "./modules/right";
 
+
 type SetFn = (state: Chess[]) => Chess[] | any[];
 
 export default function Editor() {
+  const dispatch = useDispatch();
+
   const [finalHeroList, setFinalHeroList] = useState<Chess[]>([]);
   const [agoHeroList, setAgoHeroList] = useState<Chess[]>([]);
   const [centreHeroList, setCentreHeroList] = useState<Chess[]>([]);
   const [stanceKey, setStanceKey] = useState<number | string>(1);
   const [maxLength, setMaxLength] = useState<number>(10);
+
 
   const [analyseData, setAnalyseData] = useState<AnalyseInfo>({
     robEquip: new Array(5).fill(""),
@@ -33,7 +37,7 @@ export default function Editor() {
     },
     alternativeList: [],
   });
-  const dispatch = useDispatch();
+
   const targetList = useMemo(() => {
     if (stanceKey === 1) {
       return finalHeroList;
@@ -66,15 +70,6 @@ export default function Editor() {
       setCentreHeroList((state) => setFn(state));
     }
   }
-
-  useEffect(() => {
-    const len = targetList.reduce((pre, item) => {
-      return (pre += item.equipID.filter((f) => f === "27734").length);
-    }, 0);
-
-    const baseLen = stanceKey === 1 ? 10 : stanceKey === 2 ? 5 : 7;
-    setMaxLength(baseLen + len);
-  }, [targetList, stanceKey]);
 
   useEffect(() => {
     dispatch(initData() as any);
@@ -193,6 +188,7 @@ export default function Editor() {
             deleteHero,
             updateChessEquip,
             maxLength,
+            setMaxLength,
             analyseData,
             setAnalyseData,
           }}

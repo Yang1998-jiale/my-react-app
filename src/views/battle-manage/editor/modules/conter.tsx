@@ -2,21 +2,40 @@
  * @Author: yjl
  * @Date: 2024-05-13 14:10:27
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 15:36:03
+ * @LastEditTime: 2024-06-27 16:49:33
  * @Description: 描述
  */
 import Final from "../component/final-position";
 import { useBattle, Stance, PositionList } from "../util";
 import Fetter from "../component/fetter";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { getBattleInfo } from "@/store/battle";
 
 export default function Conter() {
-  const { stanceKey, setStanceKey, targetList, setTarget, maxLength } =
-    useBattle();
+  const {
+    stanceKey,
+    setStanceKey,
+    targetList,
+    setTarget,
+    maxLength,
+    setMaxLength,
+  } = useBattle();
   const [positonKey, setPositionKey] = useState<number | string>(0);
-  // function getMaxNum() {
-  //   return Stance.find((item) => item.value === stanceKey)?.num || 10;
-  // }
+  const { equip: equipList } = useSelector(getBattleInfo);
+  const Crown = useMemo(() => {
+    return equipList.find(
+      (item) => item.name === "金铲铲冠冕" || item.keywords == "可上阵人数+1"
+    );
+  }, [equipList]);
+  useEffect(() => {
+    const len = targetList.reduce((pre, item) => {
+      return (pre += item.equipID.filter((f) => f === Crown.id).length);
+    }, 0);
+
+    const baseLen = stanceKey === 1 ? 10 : stanceKey === 2 ? 5 : 7;
+    setMaxLength(baseLen + len);
+  }, [targetList, stanceKey]);
 
   return (
     <>

@@ -13,7 +13,7 @@ import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { EquipType } from "../util";
 import { PopoverStatus } from "@/components/Popover";
-import Content from "../component/popover-content";
+import Content from "./popover-content";
 
 interface Props {
   type: string;

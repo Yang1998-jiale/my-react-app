@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-06-13 16:08:56
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-20 17:32:20
+ * @LastEditTime: 2024-06-27 10:49:37
  * @Description: 描述
  */
 import { useState, useEffect } from "react";
@@ -10,7 +10,7 @@ import { getBattleInfo } from "@/store/battle";
 import { useSelector } from "react-redux";
 import { useBattle, getEquipInfo } from "../util";
 import { PopoverBox } from "@/components/Popover/index";
-import FetterContent from "./fetter-content";
+import FetterContent from "../modal/fetter-content";
 
 export default function Fetter() {
   const [fetterList, setFetterList] = useState<any>([]);
