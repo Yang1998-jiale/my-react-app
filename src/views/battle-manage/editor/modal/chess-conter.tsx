@@ -2,15 +2,15 @@
  * @Author: yjl
  * @Date: 2024-06-20 10:45:31
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 17:02:19
+ * @LastEditTime: 2024-06-27 18:01:43
  * @Description: 描述
  */
 import { chessFormart } from "../util";
 import { PopoverStatus } from "@/components/Popover";
 import Content from "./popover-content";
-import { Input, Button } from "antd";
+import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -24,7 +24,7 @@ export default function ChessConter({
   chessList,
   activeKeys = [],
   activeNum = 1,
-  onSelect = (keys: string[]) => {},
+  onSelect = () => {},
 }: Props) {
   const [chessName, setChessName] = useState<string | undefined>("");
   const [activeChess, setActiveChess] = useState<string[]>(activeKeys);
