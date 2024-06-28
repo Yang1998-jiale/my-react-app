@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 18:00:08
+ * @LastEditTime: 2024-06-28 17:17:45
  * @Description: 描述
 -->
 1.写一个auto-router：自动收集指定目录下的指定文件,模拟ssr，目录下每一个文件夹就是一个路由
@@ -31,7 +31,7 @@
 <!-- 提交取消/代理 -->
 git config --global --unset http.proxy
 git config --global --unset https.proxy
-git config --global https.proxy http://127.0.0.1:7890
+git config --global http.proxy http://127.0.0.1:7890
 git config --global https.proxy https://127.0.0.1:7890
 
 
