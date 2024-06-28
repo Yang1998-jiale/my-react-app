@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-27 15:40:44
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-25 13:52:47
+ * @LastEditTime: 2024-06-28 11:28:37
  * @Description: 描述
  */
 
@@ -23,8 +23,8 @@ export type Tabs = {
 };
 
 type HexAnalyse = {
-  hexList: string[];
-  alternative?: string[];
+  hexList: any[];
+  alternative?: any[];
 };
 export interface AnalyseInfo {
   robEquip: string[]; //抢装

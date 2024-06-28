@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 16:49:04
+ * @LastEditTime: 2024-06-28 11:41:28
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -16,7 +16,6 @@ import type { Chess, AnalyseInfo } from "@/types/battle";
 import { BattleContext, createHero } from "./util";
 import SimulatorRight from "./modules/right";
 
-
 type SetFn = (state: Chess[]) => Chess[] | any[];
 
 export default function Editor() {
@@ -28,12 +27,11 @@ export default function Editor() {
   const [stanceKey, setStanceKey] = useState<number | string>(1);
   const [maxLength, setMaxLength] = useState<number>(10);
 
-
   const [analyseData, setAnalyseData] = useState<AnalyseInfo>({
     robEquip: new Array(5).fill(""),
     hexAnalyse: {
-      hexList: [],
-      alternative: [],
+      hexList: new Array(3).fill(""),
+      alternative: new Array(5).fill(""),
     },
     alternativeList: [],
   });

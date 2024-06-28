@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 14:27:46
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-30 15:55:42
+ * @LastEditTime: 2024-06-28 14:01:42
  * @Description: 描述
  */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
@@ -52,10 +52,13 @@ const battleSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(initData.fulfilled, (state, action) => {
-      //   console.log(action.payload);
       const result = action.payload;
       result.forEach((item: any) => {
-        state[item.key] = item.value;
+        if (item.key === "hex" && !Array.isArray(item.value)) {
+          state[item.key] = Object.values(item.value);
+        } else {
+          state[item.key] = item.value;
+        }
       });
     });
   },

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 11:57:21
+ * @LastEditTime: 2024-06-28 15:49:43
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
@@ -91,6 +91,24 @@ export const EquipType: Tabs[] = [
   },
 ];
 
+export const HexType: Tabs[] = [
+  {
+    label: "一级强化符文",
+    value: 1,
+    key: 1,
+  },
+  {
+    label: "二级强化符文",
+    value: 2,
+    key: 2,
+  },
+  {
+    label: "三级强化符文",
+    value: 3,
+    key: 3,
+  },
+];
+
 export const PositionList: Tabs[] = [
   {
     label: "站位一",
@@ -125,10 +143,16 @@ export function chessFormart(target: any[]) {
 }
 
 export function getEquipInfo(equipId: string | number, target: any[]) {
+  if (!equipId) {
+    return;
+  }
   return target.find((item) => item.id === equipId);
 }
 
 export function getHeroInfo(heroId: string | number, target: any[]) {
+  if (!heroId) {
+    return;
+  }
   let findObj = target.find((item) => item.id === heroId);
   if (findObj) {
     let obj = {
@@ -138,4 +162,18 @@ export function getHeroInfo(heroId: string | number, target: any[]) {
     return obj;
   }
   return;
+}
+
+export function getHexInfo(hexId: string | number, target: any[]) {
+  if (!hexId) {
+    return;
+  }
+  let findObj = target.find((item) => item.id === hexId);
+  if (findObj) {
+    let obj = {
+      ...findObj,
+      imagePath: findObj.imgUrl,
+    };
+    return obj;
+  }
 }
