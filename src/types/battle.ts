@@ -2,11 +2,12 @@
  * @Author: yjl
  * @Date: 2024-05-27 15:40:44
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-28 11:28:37
+ * @LastEditTime: 2024-07-01 17:29:48
  * @Description: 描述
  */
 
 export interface Chess {
+  chessID: string;
   chessType: string;
   heroID: number | string;
   equipID: string[];
@@ -30,6 +31,7 @@ export interface AnalyseInfo {
   robEquip: string[]; //抢装
   hexAnalyse: HexAnalyse; //海克斯列表
   alternativeList: string[]; //备选英雄
+  priorityStars: string[]; //优先三星
 }
 // let chess = {
 //   heroID: "xxx", //英雄ID

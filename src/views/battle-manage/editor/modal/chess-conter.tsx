@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-06-20 10:45:31
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 18:01:43
+ * @LastEditTime: 2024-07-01 18:02:38
  * @Description: 描述
  */
 import { chessFormart } from "../util";
@@ -10,7 +10,7 @@ import { PopoverStatus } from "@/components/Popover";
 import Content from "./popover-content";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -28,6 +28,10 @@ export default function ChessConter({
 }: Props) {
   const [chessName, setChessName] = useState<string | undefined>("");
   const [activeChess, setActiveChess] = useState<string[]>(activeKeys);
+
+  useEffect(() => {
+    console.log(activeKeys);
+  }, [activeKeys]);
   const chessGroup = useMemo(() => {
     return chessFormart(
       chessList.filter((item) => item.name.includes(chessName)) || []
@@ -45,7 +49,7 @@ export default function ChessConter({
             setChessName(value);
           }}
           prefix={<SearchOutlined />}
-          placeholder="请输入装备名称"
+          placeholder="请输入英雄名称"
           className="b-rd-40px !bg-#121831 b-#2f3555 !hover-bg-#121831 !hover-b-#ce78f9 !c-#fff input-item"
         />
       </div>
@@ -67,12 +71,21 @@ export default function ChessConter({
                       <div
                         className={`relative`}
                         onClick={() => {
+                          let targetID = item.id;
+                          if (item.chessID) {
+                            targetID = item.chessID;
+                          }
                           if (activeChess.includes(item.id)) {
                             return;
                           }
                           setActiveChess((state) => {
                             if (state.length < activeNum) {
                               return [...state, item.id];
+                            }
+                            let findIndex = state.findIndex((item) => !item);
+                            if (findIndex !== -1) {
+                              state[findIndex] = item.id;
+                              return [...state];
                             }
                             state.shift();
                             state.push(item.id);

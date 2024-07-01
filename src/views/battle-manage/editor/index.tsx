@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-28 11:41:28
+ * @LastEditTime: 2024-07-01 16:08:23
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -33,6 +33,7 @@ export default function Editor() {
       hexList: new Array(3).fill(""),
       alternative: new Array(5).fill(""),
     },
+    priorityStars: new Array(3).fill(""),
     alternativeList: [],
   });
 
@@ -53,6 +54,9 @@ export default function Editor() {
     }
     return list;
   }, [maxLength]);
+  useEffect(() => {
+    console.log(targetList);
+  }, [targetList]);
 
   function setTarget(setFn: SetFn) {
     if (typeof setFn !== "function") {
@@ -189,6 +193,8 @@ export default function Editor() {
             setMaxLength,
             analyseData,
             setAnalyseData,
+            finalHeroList,
+            setFinalHeroList,
           }}
         >
           <SimulatorLeft />

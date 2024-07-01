@@ -25,7 +25,7 @@ export default function Index() {
   function login(data) {
     setSpin(true);
     userLogin(data)
-      .then((res: any) => {
+      .then((res) => {
         if (res.token) {
           setToken(res.token);
           setItem("Authorization", res.token);

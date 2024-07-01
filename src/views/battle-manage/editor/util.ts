@@ -2,11 +2,12 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-28 15:49:43
+ * @LastEditTime: 2024-07-01 18:02:35
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
 import type { Chess, Tabs } from "@/types/battle";
+import { createID } from "@/utils/index";
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
 
@@ -14,6 +15,7 @@ export const BattleContext = createContext<any>(null);
 
 export function createHero(heroID: string, chessType: string = "hero"): Chess {
   return {
+    chessID: createID(chessType, heroID),
     chessType,
     heroID,
     equipID: new Array(5).fill(""),

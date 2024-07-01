@@ -2,12 +2,10 @@
  * @Author: yjl
  * @Date: 2024-04-23 13:21:31
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-30 14:50:50
+ * @LastEditTime: 2024-07-01 14:12:16
  * @Description: 描述
  */
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-
-
 
 function isFunction(target) {
   return typeof target === "function";
@@ -73,18 +71,18 @@ export default class Axios {
       });
     }
   }
-  get(config, options) {
-    return this.request({ ...config, method: "get" }, options);
+  get<T>(config, options) {
+    return this.request<T>({ ...config, method: "get" }, options);
   }
-  post(config, options) {
-    return this.request({ ...config, method: "post" }, options);
+  post<T>(config, options) {
+    return this.request<T>({ ...config, method: "post" }, options);
   }
 
   getTransform() {
     const { transform } = this.options;
     return transform;
   }
-  request(config, options) {
+  request<T = any>(config, options): Promise<T> {
     const { requestOptions } = this.options;
     const opt = Object.assign({}, requestOptions, options);
     const { apiUrl } = options;
@@ -97,7 +95,7 @@ export default class Axios {
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request(config)
-        .then((res) => {
+        .then((res: AxiosResponse<any>) => {
           //等待处理
           // console.log(123);
 
@@ -111,7 +109,7 @@ export default class Axios {
             return;
           }
 
-          resolve(res);
+          resolve(res as unknown as T);
         })
         .catch((err) => {
           //等待处理
@@ -120,4 +118,3 @@ export default class Axios {
     });
   }
 }
-

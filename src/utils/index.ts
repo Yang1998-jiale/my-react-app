@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-11 09:40:06
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-11 09:58:49
+ * @LastEditTime: 2024-07-01 18:01:49
  * @Description: 描述
  */
 
@@ -41,3 +41,12 @@ export const getGroupByKey: GetGroupByKeyParmas = (
   }
   return result;
 };
+
+export function createID(tag: any = undefined, suffix: any = undefined) {
+  let guid = "";
+  for (let i = 1; i <= 32; i++) {
+    const n = tag + Math.floor(Math.random() * 10.0).toString(16) + suffix;
+    guid += n;
+  }
+  return guid;
+}

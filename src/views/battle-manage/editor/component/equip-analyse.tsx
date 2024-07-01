@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-06-24 11:51:09
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 17:35:27
+ * @LastEditTime: 2024-07-01 17:54:41
  * @Description: 描述
  */
 
@@ -22,8 +22,9 @@ export default function EquipAnalyse() {
   const {
     analyseData: { robEquip },
     setAnalyseData,
-    targetList,
-    setTarget,
+    finalHeroList,
+    setFinalHeroList,
+    // setTarget,
   } = useBattle();
   const { equip: equipList, chess: chessList } = useSelector(getBattleInfo);
   const [equipModalOpen, setEquipModalOpen] = useState<boolean>(false);
@@ -31,22 +32,30 @@ export default function EquipAnalyse() {
   const [equipModalType, setEquipModalType] = useState<string>("all");
 
   const chessInfo = useMemo(() => {
-    let carryChess = targetList.find((item) => item.isCarry) || {};
+    let carryChess = finalHeroList.find((item) => item.isCarry) || {};
     let equipChess =
-      targetList.filter((item) => {
+      finalHeroList.filter((item) => {
         return (
           item.equipID.slice(0, 3).some((s) => s) &&
           item.heroID !== carryChess.heroID
         );
       }) || [];
     return { carryChess, equipChess };
-  }, [targetList]);
+  }, [finalHeroList]);
 
   const targetChessList = useMemo(() => {
-    let targetIds = Array.from(
-      new Set(chessInfo.equipChess.map((item) => item.heroID))
+    // let targetIds = Array.from(
+    //   new Set(chessInfo.equipChess.map((item) => item.heroID))
+    // );
+    // return chessList.filter((item) => targetIds.includes(item.id));
+    return (
+      chessInfo.equipChess.map((item) => {
+        return {
+          ...item,
+          ...chessList.find((f) => f.id == item.heroID),
+        };
+      }) || []
     );
-    return chessList.filter((item) => targetIds.includes(item.id));
   }, [chessInfo.equipChess, chessList]);
 
   useEffect(() => {
@@ -59,8 +68,15 @@ export default function EquipAnalyse() {
     setEquipModalOpen(true);
   }
 
-  function deleteEquip(index, equipID) {
-    console.log(index, equipID);
+  function deleteEquip(index, _equipID) {
+    setAnalyseData((state) => {
+      state.robEquip.splice(index, 1);
+      state.robEquip.push("");
+
+      return {
+        ...state,
+      };
+    });
   }
 
   function selectEquip(equipID) {
@@ -87,7 +103,7 @@ export default function EquipAnalyse() {
 
       chessInfo.carryChess.equipID[findIndex] = equipID;
 
-      setTarget((state) => {
+      setFinalHeroList((state) => {
         return state.map((item) => {
           if (item.heroID === chessInfo.carryChess.heroID) {
             return chessInfo.carryChess;
@@ -114,7 +130,7 @@ export default function EquipAnalyse() {
 
   function selectChess(keys) {
     // console.log(keys);
-    setTarget((state) => {
+    setFinalHeroList((state) => {
       return state.map((item) => {
         if (item.heroID === keys[0]) {
           item.isCarry = true;
@@ -126,11 +142,9 @@ export default function EquipAnalyse() {
   }
 
   function delectCarryEquip(index) {
-    chessInfo.carryChess.equipID = chessInfo.carryChess.equipID.filter(
-      (_item, i) => i != index
-    );
+    chessInfo.carryChess.equipID.splice(index, 1);
     chessInfo.carryChess.equipID.push("");
-    setTarget((state) => {
+    setFinalHeroList((state) => {
       return state.map((item) => {
         if (item.heroID === chessInfo.carryChess.heroID) {
           return chessInfo.carryChess;
