@@ -2,10 +2,15 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:24:41
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-17 15:12:06
+ * @LastEditTime: 2024-07-02 16:46:09
  * @Description: 描述
  */
 import { defHttp } from "@/utils/axios/index";
+
+const baseURl =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_APP_BASE_URL
+    : "/api";
 
 enum Api {
   chess = "/js/chess.js",
@@ -18,7 +23,7 @@ enum Api {
 export const queryInfo = (data, type = "chess") =>
   defHttp.get(
     { url: Api[type], data },
-    { apiUrl: "/api", isTransformResponse: false }
+    { apiUrl: baseURl, isTransformResponse: false }
   );
 
 export const queyrBaidu = (url, data, type) => {
