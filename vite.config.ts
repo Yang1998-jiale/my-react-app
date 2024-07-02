@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:32:24
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-02 15:25:47
+ * @LastEditTime: 2024-07-02 16:58:37
  * @Description: 描述
  */
 import { defineConfig } from "vite";
@@ -47,12 +47,6 @@ export default defineConfig({
         ws: true,
         rewrite: (path) => path.replace(new RegExp(`^/api`), ""),
         // 其他可选配置...
-      },
-      "/baidu": {
-        target: "https://aip.baidubce.com/", // 目标服务器地址
-        changeOrigin: true, // 改变源到目标服务器
-        ws: true,
-        rewrite: (path) => path.replace(new RegExp(`^/baidu`), ""),
       },
     },
   },
