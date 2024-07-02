@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:32:24
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-17 14:53:37
+ * @LastEditTime: 2024-07-02 15:25:47
  * @Description: 描述
  */
 import { defineConfig } from "vite";
@@ -22,6 +22,9 @@ export default defineConfig({
     viteMockServe({
       ignore: /^_/,
       mockPath: "mock",
+      watchFiles: true,
+      localEnabled: false,
+      prodEnabled: true,
       injectCode: `
       import { setupProdMockServer } from '../mock/_createProductionServer';
 

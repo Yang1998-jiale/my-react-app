@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-06-20 10:45:31
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-01 18:02:38
+ * @LastEditTime: 2024-07-02 10:25:51
  * @Description: 描述
  */
 import { chessFormart } from "../util";
@@ -10,7 +10,7 @@ import { PopoverStatus } from "@/components/Popover";
 import Content from "./popover-content";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -29,18 +29,12 @@ export default function ChessConter({
   const [chessName, setChessName] = useState<string | undefined>("");
   const [activeChess, setActiveChess] = useState<string[]>(activeKeys);
 
-  useEffect(() => {
-    console.log(activeKeys);
-  }, [activeKeys]);
   const chessGroup = useMemo(() => {
     return chessFormart(
       chessList.filter((item) => item.name.includes(chessName)) || []
     );
   }, [chessList, chessName]);
 
-  // useEffect(() => {
-  //   setActiveChess(() => activeKeys.map((item) => item.name));
-  // }, [activeKeys]);
   return (
     <div className="w-100% h-600px  flex flex-col">
       <div className="flex-shrink-0">
@@ -66,7 +60,7 @@ export default function ChessConter({
                     <PopoverStatus
                       content={<Content info={item} type={"chess"} />}
                       rootClassName={"chess-popover"}
-                      key={item.id}
+                      key={item.chessID || item.id}
                     >
                       <div
                         className={`relative`}
@@ -75,20 +69,18 @@ export default function ChessConter({
                           if (item.chessID) {
                             targetID = item.chessID;
                           }
-                          if (activeChess.includes(item.id)) {
-                            return;
-                          }
+
                           setActiveChess((state) => {
                             if (state.length < activeNum) {
-                              return [...state, item.id];
+                              return [...state, targetID];
                             }
-                            let findIndex = state.findIndex((item) => !item);
+                            let findIndex = state.findIndex((f) => !f);
                             if (findIndex !== -1) {
-                              state[findIndex] = item.id;
+                              state[findIndex] = targetID;
                               return [...state];
                             }
                             state.shift();
-                            state.push(item.id);
+                            state.push(targetID);
                             return [...state];
                           });
                         }}
@@ -101,7 +93,7 @@ export default function ChessConter({
                           }`}
                           alt=""
                         />
-                        {activeChess.includes(item.id) && (
+                        {activeChess.includes(item.chessID || item.id) && (
                           <div className="w-22px h-22px b-rd-50% absolute b-1px b-solid b-#5d4f30 bg-#101317 c-#fff5e0 text-center line-height-19px top-0 right-0 translate-[0%,-30%]">
                             1
                           </div>
@@ -116,8 +108,18 @@ export default function ChessConter({
         })}
       </div>
       <div className="w-100% text-center">
+        {activeNum > 1 && (
+          <div
+            onClick={() => {
+              setActiveChess([]);
+            }}
+            className="inline-flex items-center m-x-36px cursor-pointer justify-center w-136px h-40px !b-rd-3px !bg-transparent c-#f1f2f8 !hover-b-[#c174e8] !hover-c-#c174e8 b-1px b-solid"
+          >
+            全部移除
+          </div>
+        )}
         <div
-          className="inline-flex items-center cursor-pointer justify-center w-136px h-40px !b-rd-3px !bg-transparent c-#f1f2f8 !hover-b-[#c174e8] !hover-c-#c174e8 b-1px b-solid"
+          className="inline-flex items-center m-x-36px cursor-pointer justify-center w-136px h-40px !b-rd-3px !bg-transparent c-#f1f2f8 !hover-b-[#c174e8] !hover-c-#c174e8 b-1px b-solid"
           onClick={() => {
             onSelect(activeChess);
           }}

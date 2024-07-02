@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 17:53:45
+ * @LastEditTime: 2024-07-02 10:06:05
  * @Description: 描述
  */
 
@@ -29,8 +29,14 @@ function Star() {
   return <div className="w-12px h-20px star-box"></div>;
 }
 export default function CenterBox({ info, index, positonKey = 0 }: Props) {
-  const { dropChessPosition, dropReplaceChess, deleteHero, updateChessEquip } =
-    useBattle();
+  const {
+    dropChessPosition,
+    dropReplaceChess,
+    deleteHero,
+    updateChessEquip,
+    analyseData,
+  } = useBattle();
+  const { priorityStars } = analyseData;
   const { chess: chessList, equip: equipList } = useSelector(getBattleInfo);
   const detail = chessList.find((item) => item.id == info.heroID);
   const [equipModalOpen, setEquipModalOpen] = useState(false);
@@ -138,7 +144,7 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
           style={{ background: `url(${minUrl + detail?.name})` }}
         ></i>
       </div>
-      {info.isChosen ? (
+      {priorityStars.includes(info.heroID) ? (
         <div className="absolute top-[-7px] left-50% translate-x-[-48%] z-100 flex items-center">
           <Star /> <Star /> <Star />
         </div>

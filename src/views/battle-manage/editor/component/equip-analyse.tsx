@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-06-24 11:51:09
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-01 17:54:41
+ * @LastEditTime: 2024-07-02 10:29:39
  * @Description: 描述
  */
 
@@ -37,7 +37,7 @@ export default function EquipAnalyse() {
       finalHeroList.filter((item) => {
         return (
           item.equipID.slice(0, 3).some((s) => s) &&
-          item.heroID !== carryChess.heroID
+          item.chessID !== carryChess.chessID
         );
       }) || [];
     return { carryChess, equipChess };
@@ -105,7 +105,7 @@ export default function EquipAnalyse() {
 
       setFinalHeroList((state) => {
         return state.map((item) => {
-          if (item.heroID === chessInfo.carryChess.heroID) {
+          if (item.chessID === chessInfo.carryChess.chessID) {
             return chessInfo.carryChess;
           }
           return item;
@@ -132,7 +132,7 @@ export default function EquipAnalyse() {
     // console.log(keys);
     setFinalHeroList((state) => {
       return state.map((item) => {
-        if (item.heroID === keys[0]) {
+        if (item.chessID === keys[0]) {
           item.isCarry = true;
         }
         return item;
@@ -141,12 +141,23 @@ export default function EquipAnalyse() {
     setChessModalOpen(false);
   }
 
+  function deleteCarryHero(chess) {
+    setFinalHeroList((state) => {
+      return state.map((item) => {
+        if (item.chessID === chess.chessID) {
+          item.isCarry = false;
+        }
+        return item;
+      });
+    });
+  }
+
   function delectCarryEquip(index) {
     chessInfo.carryChess.equipID.splice(index, 1);
     chessInfo.carryChess.equipID.push("");
     setFinalHeroList((state) => {
       return state.map((item) => {
-        if (item.heroID === chessInfo.carryChess.heroID) {
+        if (item.chessID === chessInfo.carryChess.chessID) {
           return chessInfo.carryChess;
         }
         return item;
@@ -196,6 +207,9 @@ export default function EquipAnalyse() {
                 return;
               }
               setChessModalOpen(true);
+            }}
+            deleteCbk={() => {
+              deleteCarryHero(chessInfo.carryChess);
             }}
             isRadius={true}
           />
