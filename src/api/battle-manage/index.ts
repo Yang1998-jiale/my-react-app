@@ -2,15 +2,11 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:24:41
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-02 16:58:05
+ * @LastEditTime: 2024-07-02 17:52:46
  * @Description: 描述
  */
 import { defHttp } from "@/utils/axios/index";
 
-// const baseURl =
-//   import.meta.env.MODE === "production"
-//     ? import.meta.env.VITE_APP_BASE_URL
-//     : "/api";
 const baseURl = "/api";
 enum Api {
   chess = "/js/chess.js",
