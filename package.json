@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.22.3",
+    "rollup-plugin-visualizer": "^5.12.0",
     "unocss": "^0.59.3"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
+    "terser": "^5.31.1",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-mock": "^2.9.6"

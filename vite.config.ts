@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:32:24
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-02 16:58:37
+ * @LastEditTime: 2024-07-03 11:34:00
  * @Description: 描述
  */
 import { defineConfig } from "vite";
@@ -11,6 +11,8 @@ import path from "path";
 import { presetTypography, presetUno } from "unocss";
 import UnoCSS from "unocss/vite";
 import { viteMockServe } from "vite-plugin-mock";
+
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -31,10 +33,42 @@ export default defineConfig({
       setupProdMockServer();
       `,
     }),
+    visualizer({
+      open: true, // 注意这里要设置为true，否则无效，如果存在本地服务端口，将在打包后自动展示
+      gzipSize: true,
+      brotliSize: true,
+    }),
   ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    cssTarget: "chrome80",
+    rollupOptions: {
+      output: {
+        chunkFileNames: "static/js/[name]-[hash].js",
+        entryFileNames: "static/js/[name]-[hash].js",
+        assetFileNames: "static/[ext]/[name]-[hash].[ext]",
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          antd: ["antd", "@ant-design/icons"],
+        },
+      },
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
     },
   },
   server: {
