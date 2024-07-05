@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-19 09:52:45
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-05 17:51:53
+ * @LastEditTime: 2024-07-05 18:06:34
  * @Description: 描述
  */
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -26,7 +26,7 @@ export default function Index() {
         <Outlet />
       ) : (
         <div className="w-100% h-100% cursor-pointer">
-          我是study/index页面
+          
           <Button onClick={() => navigate("/study/index/home")}>
             查看详情
           </Button>
