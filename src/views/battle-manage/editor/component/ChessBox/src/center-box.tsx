@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-22 16:44:49
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-02 10:06:05
+ * @LastEditTime: 2024-07-05 17:51:27
  * @Description: 描述
  */
 
@@ -116,7 +116,6 @@ export default function CenterBox({ info, index, positonKey = 0 }: Props) {
 
   function equipSelect(equipID: undefined | string, _equipInfo?: any) {
     if (equipID) {
-      // console.log(equipID);
       addEquip(equipID);
     }
     setEquipModalOpen(false);

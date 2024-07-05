@@ -41,7 +41,6 @@ export default function Index() {
     login(values);
   }
   function onFinishFailed(err) {
-    console.log(err);
   }
   return (
     <>

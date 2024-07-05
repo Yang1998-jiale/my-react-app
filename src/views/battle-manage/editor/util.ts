@@ -2,11 +2,11 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-01 18:02:35
+ * @LastEditTime: 2024-07-05 15:57:55
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
-import type { Chess, Tabs } from "@/types/battle";
+import type { Chess, Tabs, Alternative } from "@/types/battle";
 import { createID } from "@/utils/index";
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
 const minUrl = baseURl + "act/img/tft/champions/";
@@ -178,4 +178,11 @@ export function getHexInfo(hexId: string | number, target: any[]) {
     };
     return obj;
   }
+}
+
+export function createAlternative(): Alternative {
+  return {
+    orginChess: [""],
+    alternativeChess: [""],
+  };
 }

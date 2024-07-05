@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:52:15
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 11:18:59
+ * @LastEditTime: 2024-07-05 17:50:42
  * @Description: 描述
  */
 const modules = import.meta.glob("./modules/**/*.tsx", { eager: true });
@@ -31,7 +31,6 @@ function routerFlat(target, flat) {
   });
   return flat;
 }
-console.log(routerFlat(routers, []));
 
 export const routerFlatList = routerFlat(routers, []);
 

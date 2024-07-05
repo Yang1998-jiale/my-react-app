@@ -2,18 +2,17 @@
  * @Author: yjl
  * @Date: 2024-04-19 09:52:45
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-24 15:31:49
+ * @LastEditTime: 2024-07-05 17:51:53
  * @Description: 描述
  */
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { useEffect } from "react";
-import { queryStudyList } from "@/api/study-manage/index";
+// import { queryStudyList } from "@/api/study-manage/index";
 
-function queryData(params) {
-  queryStudyList(params).then((res) => {
-    console.log(res);
-  });
+function queryData(_params) {
+  // queryStudyList(params).then((res) => {
+  // });
 }
 export default function Index() {
   const location = useLocation();

@@ -96,8 +96,6 @@ export default class Axios {
       this.axiosInstance
         .request(config)
         .then((res: AxiosResponse<any>) => {
-          //等待处理
-          // console.log(123);
 
           if (transformResponse && isFunction(transformResponse)) {
             try {

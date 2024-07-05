@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-06-13 16:08:56
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 10:49:37
+ * @LastEditTime: 2024-07-05 17:51:21
  * @Description: 描述
  */
 import { useState, useEffect } from "react";
@@ -36,8 +36,6 @@ export default function Fetter() {
       .filter((item) => item);
     equipIds.forEach((item) => {
       const equip = getEquipInfo(item, equipList);
-      console.log(equip);
-
       if (Number(equip.raceId)) {
         if (raceInfo[equip.raceId]) {
           raceInfo[equip.raceId].equip.push({

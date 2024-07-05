@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 16:16:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 11:33:15
+ * @LastEditTime: 2024-07-05 17:50:30
  * @Description: 描述
  */
 import { Menu } from "antd";
@@ -54,7 +54,6 @@ function MenuComponent() {
   const [openKeys, setOpenKeys] = useState([
     "/" + selectedKeys[0].split("/")[1],
   ]);
-  // console.log(selectedKeys);
   useEffect(() => {
     const findRoute = findRouter(location.pathname);
     if (findRoute?.meta?.currentActive) {

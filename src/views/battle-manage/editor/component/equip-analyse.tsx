@@ -2,13 +2,13 @@
  * @Author: yjl
  * @Date: 2024-06-24 11:51:09
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-02 10:29:39
+ * @LastEditTime: 2024-07-05 17:16:26
  * @Description: 描述
  */
 
 import BoxTitle from "./box-title";
 import { useBattle, getEquipInfo, getHeroInfo } from "../util";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 import { RightOutlined } from "@ant-design/icons";
@@ -44,10 +44,6 @@ export default function EquipAnalyse() {
   }, [finalHeroList]);
 
   const targetChessList = useMemo(() => {
-    // let targetIds = Array.from(
-    //   new Set(chessInfo.equipChess.map((item) => item.heroID))
-    // );
-    // return chessList.filter((item) => targetIds.includes(item.id));
     return (
       chessInfo.equipChess.map((item) => {
         return {
@@ -57,11 +53,6 @@ export default function EquipAnalyse() {
       }) || []
     );
   }, [chessInfo.equipChess, chessList]);
-
-  useEffect(() => {
-    console.log("targetChessList", targetChessList);
-    console.log("chessInfo", chessInfo);
-  }, [targetChessList, chessInfo]);
 
   function showEquipModal(type: string) {
     setEquipModalType(type);
@@ -129,7 +120,6 @@ export default function EquipAnalyse() {
   }
 
   function selectChess(keys) {
-    // console.log(keys);
     setFinalHeroList((state) => {
       return state.map((item) => {
         if (item.chessID === keys[0]) {

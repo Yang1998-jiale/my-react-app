@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-19 16:11:54
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-22 15:41:56
+ * @LastEditTime: 2024-07-05 17:50:21
  * @Description: 描述
  */
 
@@ -40,10 +40,8 @@ function findRouter(target, routers) {
 
 export default function Index() {
   const location = useLocation();
-  // console.log(location);
   const routerActives = findRouter(location.pathname, routerList);
   function itemRender(currentRoute, _params, _items, paths) {
-    // console.log(currentRoute, params, items, paths);
 
     const isLast = currentRoute?.meta?.noBread;
 

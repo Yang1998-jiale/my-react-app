@@ -19,7 +19,6 @@ const chessSlice = createSlice({
     // },
     update(state, action: any) {
       const { index, value } = action.payload;
-      console.log("index", value);
 
       if (state.activeChessIndex !== null) {
         state.list[state.activeChessIndex] = value;

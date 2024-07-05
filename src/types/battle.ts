@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-27 15:40:44
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-01 17:29:48
+ * @LastEditTime: 2024-07-05 15:53:30
  * @Description: 描述
  */
 
@@ -27,10 +27,15 @@ type HexAnalyse = {
   hexList: any[];
   alternative?: any[];
 };
+
+export type Alternative = {
+  orginChess: string[];
+  alternativeChess: string[];
+};
 export interface AnalyseInfo {
   robEquip: string[]; //抢装
   hexAnalyse: HexAnalyse; //海克斯列表
-  alternativeList: string[]; //备选英雄
+  alternativeList: Alternative[]; //备选英雄
   priorityStars: string[]; //优先三星
 }
 // let chess = {

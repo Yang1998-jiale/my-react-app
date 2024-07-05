@@ -22,7 +22,6 @@ export default function HexAnalyse() {
     setAnalyseData,
   } = useBattle();
   const { hexList, alternative } = hexAnalyse;
-  console.log(hexList, alternative);
 
   const [priority, setPriority] = useState<Priority>("priority");
   const [hexModalOpen, setHexModalOpen] = useState<boolean>(false);

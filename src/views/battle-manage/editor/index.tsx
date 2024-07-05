@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-01 16:08:23
+ * @LastEditTime: 2024-07-05 17:50:59
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -13,7 +13,7 @@ import { useEffect, useState, useMemo } from "react";
 import SimulatorConter from "./modules/conter";
 import { message } from "antd";
 import type { Chess, AnalyseInfo } from "@/types/battle";
-import { BattleContext, createHero } from "./util";
+import { BattleContext, createHero, createAlternative } from "./util";
 import SimulatorRight from "./modules/right";
 
 type SetFn = (state: Chess[]) => Chess[] | any[];
@@ -34,7 +34,7 @@ export default function Editor() {
       alternative: new Array(5).fill(""),
     },
     priorityStars: new Array(3).fill(""),
-    alternativeList: [],
+    alternativeList: [createAlternative()],
   });
 
   const targetList = useMemo(() => {
@@ -54,9 +54,6 @@ export default function Editor() {
     }
     return list;
   }, [maxLength]);
-  useEffect(() => {
-    console.log(targetList);
-  }, [targetList]);
 
   function setTarget(setFn: SetFn) {
     if (typeof setFn !== "function") {

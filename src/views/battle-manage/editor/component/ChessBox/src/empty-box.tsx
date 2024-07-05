@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-13 15:25:28
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-19 14:46:05
+ * @LastEditTime: 2024-07-05 17:51:32
  * @Description: 描述
  */
 // import { useState } from "react";
@@ -16,7 +16,6 @@ export default function ChessBox({ index, positonKey = 0 }: Props) {
   const { dropChessAdd, dropChessUpdate } = useBattle();
   function dropFn(e: React.DragEvent) {
     const xy = `${Math.floor(index / 7)},${index % 7}`;
-    console.log(xy);
 
     e.preventDefault();
     const action = e.dataTransfer.getData("action");
@@ -26,7 +25,6 @@ export default function ChessBox({ index, positonKey = 0 }: Props) {
       dropChessAdd(chessObj, xy, positonKey);
     } else if (action === "update") {
       const targetXY = e.dataTransfer.getData("chessXY");
-      console.log(targetXY);
       dropChessUpdate(targetXY, xy, positonKey);
     }
   }

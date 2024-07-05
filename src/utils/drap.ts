@@ -8,7 +8,6 @@
 let drapInfo: any = null;
 export function drap(info) {
   drapInfo = info;
-  console.log(info);
 }
 
 export function getDrapInfo() {
