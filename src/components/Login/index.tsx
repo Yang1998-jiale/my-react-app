@@ -40,8 +40,8 @@ export default function Index() {
   function onFinish(values) {
     login(values);
   }
-  function onFinishFailed(err) {
-    console.log(err);
+  function onFinishFailed(_err) {
+    // console.log(err);
   }
   return (
     <>
