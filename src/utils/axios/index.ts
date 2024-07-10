@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-24 09:43:59
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-30 10:53:29
+ * @LastEditTime: 2024-07-10 17:09:24
  * @Description: 描述
  */
 import Axios from "./axios";
@@ -46,6 +46,8 @@ const transform = {
   },
   transformResponse(res, options) {
     const { isTransformResponse, isReturnNativeResponse } = options;
+    console.log(res);
+
     if (isReturnNativeResponse) {
       return res;
     }
@@ -59,8 +61,8 @@ const transform = {
       // return '[HTTP] Request has no return value';
       throw new Error("请求出错,请稍后重试");
     }
-    const { data: result, code, msg: message } = data;
-    if (data && Reflect.has(data, "code") && code === 0) {
+    const { data: result, code, message } = data;
+    if (data && Reflect.has(data, "code") && (code === 0 || code == 200)) {
       return result;
     } else {
       Modal.error({
@@ -70,6 +72,17 @@ const transform = {
       });
     }
   },
+  beforeRequestHook(config, options) {
+    const { apiUrl, joinPrefix, urlPrefix } = options;
+    if (joinPrefix) {
+      config.url = `${urlPrefix}${config.url}`;
+    }
+
+    if (apiUrl) {
+      config.url = `${apiUrl}${config.url}`;
+    }
+    return config;
+  },
 };
 export function createAxios(config: any = {}) {
   return new Axios({
@@ -77,12 +90,14 @@ export function createAxios(config: any = {}) {
     headers: { "Content-Type": "application/json;charset=UTF-8" },
     transform,
     requestOptions: {
+      joinPrefix: true,
       // 是否返回原生响应头 比如：需要获取响应头时使用该属性
       isReturnNativeResponse: false,
       // 需要对返回数据进行处理
       isTransformResponse: true,
       ignoreCancelToken: true,
       apiUrl: "",
+      urlPrefix: "",
     },
     ...(config || {}),
   });

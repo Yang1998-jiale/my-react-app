@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-23 13:21:31
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-01 14:12:16
+ * @LastEditTime: 2024-07-10 17:06:27
  * @Description: 描述
  */
 import axios, { AxiosInstance, AxiosResponse } from "axios";
@@ -85,18 +85,16 @@ export default class Axios {
   request<T = any>(config, options): Promise<T> {
     const { requestOptions } = this.options;
     const opt = Object.assign({}, requestOptions, options);
-    const { apiUrl } = options;
     config.requestOptions = opt;
     const transform = this.getTransform();
-    const { transformResponse } = transform;
-    if (apiUrl) {
-      config.url = `${apiUrl}${config.url}`;
+    const { transformResponse, beforeRequestHook } = transform;
+    if (beforeRequestHook && isFunction(beforeRequestHook)) {
+      config = beforeRequestHook(config, opt);
     }
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request(config)
         .then((res: AxiosResponse<any>) => {
-
           if (transformResponse && isFunction(transformResponse)) {
             try {
               const newRes = transformResponse(res, opt);

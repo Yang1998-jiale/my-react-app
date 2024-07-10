@@ -26,6 +26,8 @@ export default function Index() {
     setSpin(true);
     userLogin(data)
       .then((res) => {
+       
+
         if (res.token) {
           setToken(res.token);
           setItem("Authorization", res.token);
@@ -64,12 +66,12 @@ export default function Index() {
           <Form
             name="basic"
             autoComplete="off"
-            initialValues={{ userName: "yjl", password: "molimicha12138" }}
+            initialValues={{ username: "yjl", password: "molimicha12138" }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
             <Form.Item
-              name="userName"
+              name="username"
               rules={[{ required: true, message: "请输入用户名/手机号" }]}
             >
               <Input

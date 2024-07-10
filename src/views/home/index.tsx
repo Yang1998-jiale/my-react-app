@@ -2,16 +2,19 @@
  * @Author: yjl
  * @Date: 2024-04-18 16:01:12
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-02 16:58:24
+ * @LastEditTime: 2024-07-10 17:11:59
  * @Description: 描述
  */
 import { Typography } from "antd";
 import "./style/index.less";
+import { getUserInfo } from "@/api/login/index";
 
 const { Title, Paragraph } = Typography;
 
 export default function Home() {
-
+  getUserInfo({}).then((res) => {
+    console.log(res);
+  });
   return (
     <div className="w-100% h-100% overflow-y-auto p-x-24px  relative">
       <Typography>

@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:32:24
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-03 11:34:00
+ * @LastEditTime: 2024-07-10 16:44:35
  * @Description: 描述
  */
 import { defineConfig } from "vite";
@@ -81,6 +81,12 @@ export default defineConfig({
         ws: true,
         rewrite: (path) => path.replace(new RegExp(`^/api`), ""),
         // 其他可选配置...
+      },
+      "/base": {
+        target: "http://127.0.0.1:7001", // 目标服务器地址
+        changeOrigin: true, // 改变源到目标服务器
+        ws: true,
+        rewrite: (path) => path.replace(new RegExp(`^/base`), ""),
       },
     },
   },
