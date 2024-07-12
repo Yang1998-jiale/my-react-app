@@ -2,12 +2,13 @@
  * @Author: yjl
  * @Date: 2024-04-24 09:43:59
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-10 17:09:24
+ * @LastEditTime: 2024-07-11 16:43:21
  * @Description: 描述
  */
 import Axios from "./axios";
-import { getItem } from "../cookie";
+import { getItem, setItem } from "../cookie";
 import { Modal } from "antd";
+
 let errorModal: any = false;
 const queue: any = [];
 const transform = {
@@ -65,6 +66,18 @@ const transform = {
     if (data && Reflect.has(data, "code") && (code === 0 || code == 200)) {
       return result;
     } else {
+      if (message == "非法标记") {
+        Modal.error({
+          content: `${message},请重新登录`,
+          centered: true,
+          title: "提示",
+          onOk: () => {
+            setItem("Authorization", "");
+            window.location.href = "/login";
+          },
+        });
+        return;
+      }
       Modal.error({
         content: message,
         centered: true,

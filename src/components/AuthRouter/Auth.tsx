@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-24 13:43:13
  * @LastEditors: yjl
- * @LastEditTime: 2024-04-24 15:50:20
+ * @LastEditTime: 2024-07-12 17:17:32
  * @Description: 描述
  */
 import { createContext, useContext, useMemo, useState } from "react";
@@ -23,7 +23,8 @@ export default function AuthProvider({ children }) {
 
   function logout() {
     setUser(null);
-    setItem("Authorization", null);
+    setItem("Authorization", "");
+    navigate("/login", { replace: true });
   }
   const value = useMemo(
     () => ({

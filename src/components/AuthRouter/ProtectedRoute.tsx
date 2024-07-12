@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-24 14:45:00
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-05 17:50:16
+ * @LastEditTime: 2024-07-11 16:32:15
  * @Description: 描述
  */
 import { Navigate } from "react-router-dom";
@@ -14,5 +14,6 @@ export default function ProtectedRoute({ children }) {
   if (!user) {
     return <Navigate to="/login" />;
   }
+  
   return children;
 }

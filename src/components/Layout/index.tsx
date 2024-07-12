@@ -2,29 +2,48 @@
  * @Author: yjl
  * @Date: 2024-04-19 11:49:19
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 11:32:40
+ * @LastEditTime: 2024-07-12 17:17:21
  * @Description: 描述
  */
 import { useState } from "react";
 import Menu from "@/components/Menu/index";
-import { Layout, Avatar, theme } from "antd";
+import { Layout, Avatar, theme, Dropdown } from "antd";
+import type { MenuProps } from "antd";
 import headerImg from "@/assets/images/header.jpg";
 import Breadcrumb from "@/components/Breadcrumb/index";
 import Routers from "@/router/index";
 import { useNavigate, Outlet } from "react-router-dom";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import Logo from "@/assets/logo.png";
+import { useAuth } from "../AuthRouter/Auth";
 
 const { Header, Sider, Content } = Layout;
 
 const title = import.meta.env.VITE_APP_TITLE;
 
 export default function Index() {
+  const { logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const navigate = useNavigate();
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <div className="w-80px hover-c-#0077ee" onClick={logout}>
+          <LogoutOutlined className="m-r-16px" />
+          退出
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -56,7 +75,9 @@ export default function Index() {
                 <MenuFoldOutlined className="text-20px m-l-16px" />
               )}
             </div>
-            <Avatar className="m-r-24px" src={headerImg} />
+            <Dropdown menu={{ items }}>
+              <Avatar className="m-r-24px cursor-pointer" src={headerImg} />
+            </Dropdown>
           </Header>
           <Breadcrumb />
           <Content
