@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-24 16:20:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 11:18:48
+ * @LastEditTime: 2024-07-15 15:34:16
  * @Description: 描述
  */
 import { lazy } from "react";
@@ -29,14 +29,14 @@ const battleManage = {
       },
     },
     {
-        path: "/battle/editor",
-        element: <Editor />,
-        caseSensitive: true,
-        meta: {
-          title: "阵容编辑器",
-          noBread: true, //是否可以点击切换面包屑
-        },
+      path: "/battle/editor",
+      element: <Editor />,
+      caseSensitive: true,
+      meta: {
+        title: "阵容编辑器",
+        noBread: true, //是否可以点击切换面包屑
       },
+    },
   ],
 };
 

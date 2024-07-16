@@ -2,30 +2,36 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-05 17:50:59
+ * @LastEditTime: 2024-07-15 15:28:04
  * @Description: 描述
  */
 import "../style/editor.css";
 import SimulatorLeft from "./modules/left";
 import { useDispatch } from "react-redux";
 import { initData } from "@/store/battle";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
+import BattleModal from "@/components/Modal/BattleModal";
+
 import SimulatorConter from "./modules/conter";
 import { message } from "antd";
 import type { Chess, AnalyseInfo } from "@/types/battle";
 import { BattleContext, createHero, createAlternative } from "./util";
 import SimulatorRight from "./modules/right";
+import { createImage } from "@/utils/file/download";
 
 type SetFn = (state: Chess[]) => Chess[] | any[];
+//html2canvasSaveBox1
 
 export default function Editor() {
   const dispatch = useDispatch();
-
+  const editorRef = useRef<HTMLDivElement>(null);
   const [finalHeroList, setFinalHeroList] = useState<Chess[]>([]);
   const [agoHeroList, setAgoHeroList] = useState<Chess[]>([]);
   const [centreHeroList, setCentreHeroList] = useState<Chess[]>([]);
   const [stanceKey, setStanceKey] = useState<number | string>(1);
   const [maxLength, setMaxLength] = useState<number>(10);
+  const [imgUrl, setImgUrl] = useState<string>("");
+  const [imgOpen, setImgOpen] = useState<boolean>(false);
 
   const [analyseData, setAnalyseData] = useState<AnalyseInfo>({
     robEquip: new Array(5).fill(""),
@@ -172,7 +178,10 @@ export default function Editor() {
 
   return (
     <>
-      <div className="w-100% h-100% details-page overflow-y-auto p-t-120px p-b-80px p-x-24px flex items-start">
+      <div
+        className="w-100% h-100% details-page overflow-y-auto p-t-120px p-b-80px p-x-24px flex items-start relative"
+        ref={editorRef}
+      >
         <BattleContext.Provider
           value={{
             stanceKey,
@@ -194,9 +203,36 @@ export default function Editor() {
             setFinalHeroList,
           }}
         >
+          <div
+            className="absolute top-48px right-24px p-x-10px p-y-4px c-#fff b-1px b-solid b-#c174e8 bg-#c174e8  b-rd-2px  cursor-pointer hidden"
+            onClick={async () => {
+              let url: any = await createImage(editorRef.current);
+              console.log(url);
+
+              setImgUrl(url);
+              setImgOpen(true);
+            }}
+          >
+            生成图片
+          </div>
           <SimulatorLeft />
           <SimulatorConter />
           <SimulatorRight />
+          <BattleModal
+            footer={null}
+            open={imgOpen}
+            title="生成图片"
+            width="1600px"
+            centered
+            destroyOnClose={true}
+            onCancel={() => {
+              setImgOpen(false);
+            }}
+          >
+            <div className="w-100%">
+              <img src={imgUrl} alt="" className="w-100% h-800px" />
+            </div>
+          </BattleModal>
         </BattleContext.Provider>
       </div>
     </>

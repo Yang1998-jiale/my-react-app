@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-11 09:40:06
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-01 18:01:49
+ * @LastEditTime: 2024-07-16 15:50:29
  * @Description: 描述
  */
 
@@ -49,4 +49,18 @@ export function createID(tag: any = undefined, suffix: any = undefined) {
     guid += n;
   }
   return guid;
+}
+
+/**
+ * 防抖
+ */
+export function debounce(fn: Function, delay: number) {
+  let timer: any;
+  return function (this, ...arg) {
+    const that: any = this;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(that, arg);
+    }, delay);
+  };
 }

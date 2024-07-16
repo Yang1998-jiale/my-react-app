@@ -12,9 +12,15 @@
     "preview:dist": "vite preview"
   },
   "dependencies": {
+    "@mars3d/heatmap.js": "^2.0.7",
     "@reduxjs/toolkit": "^2.2.3",
+    "@turf/turf": "^6.5.0",
     "antd": "^5.16.2",
     "axios": "^1.6.8",
+    "html2canvas": "^1.4.1",
+    "mars3d": "^3.7.21",
+    "mars3d-cesium": "^1.119.0",
+    "mars3d-heatmap": "^3.7.21",
     "mockjs": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -41,6 +47,7 @@
     "terser": "^5.31.1",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-plugin-mars3d": "^4.1.1",
     "vite-plugin-mock": "^2.9.6"
   }
 }

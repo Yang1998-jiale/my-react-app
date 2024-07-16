@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:32:24
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-10 16:44:35
+ * @LastEditTime: 2024-07-15 15:43:04
  * @Description: 描述
  */
 import { defineConfig } from "vite";
@@ -11,7 +11,7 @@ import path from "path";
 import { presetTypography, presetUno } from "unocss";
 import UnoCSS from "unocss/vite";
 import { viteMockServe } from "vite-plugin-mock";
-
+import { mars3dPlugin } from "vite-plugin-mars3d";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
@@ -29,7 +29,7 @@ export default defineConfig({
       prodEnabled: true,
       injectCode: `
       import { setupProdMockServer } from '../mock/_createProductionServer';
-
+      
       setupProdMockServer();
       `,
     }),
@@ -38,6 +38,7 @@ export default defineConfig({
       gzipSize: true,
       brotliSize: true,
     }),
+    mars3dPlugin(),
   ],
   resolve: {
     alias: {
