@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-07-15 15:32:00
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-16 17:30:49
+ * @LastEditTime: 2024-07-17 13:43:47
  * @Description: 描述
  */
 import useMars3D from "@/hooks/web/mars3D";
@@ -10,11 +10,12 @@ import { useEffect } from "react";
 import { Data } from "../point.json";
 import { Input } from "antd";
 import * as mars3d from "mars3d";
-import areaInfo from "../area.json";
+import * as Cesium from "mars3d-cesium";
+// import areaInfo from "../area.json";
 
 export default function Index() {
-  let fuzouList = mars3d.Util.geoJsonToGraphics(areaInfo);
-  console.log(fuzouList);
+  // let fuzouList = mars3d.Util.geoJsonToGraphics(areaInfo);
+  // console.log(fuzouList);
   const { showHeatMap, searchByKey, map } = useMars3D("mars3dContainer", {
     scene: {
       center: {
@@ -37,9 +38,10 @@ export default function Index() {
       })
     );
 
-    fuzouList.map((item) => {
-      initArea(item);
-    });
+    // fuzouList.map((item) => {
+    //   initArea(item);
+    // });
+    initAreaMask();
   });
 
   function initArea(info) {
@@ -65,6 +67,29 @@ export default function Index() {
     });
 
     graphicLayer.addGraphic(graphic);
+  }
+
+  function initAreaMask() {
+    let maskLayer = new mars3d.layer.GeoJsonLayer({
+      url: "/mars3d/file/geojson/areas/350100.json",
+      mask: true, // 标识为遮罩层【重点参数】
+      symbol: {
+        styleOptions: {
+          fill: true,
+          color: "#000000",
+          opacity: 0.4,
+          outline: true,
+          outlineColor: "#0077ee",
+          outlineWidth: 6,
+          outlineOpacity: 0.6,
+          arcType: Cesium.ArcType.GEODESIC,
+          global: false, // 是否全球遮罩，false时为中国区域
+          clampToGround: true,
+        },
+      },
+    });
+
+    map.current.addLayer(maskLayer);
   }
 
   return (

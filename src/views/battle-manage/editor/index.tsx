@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 10:09:14
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-15 15:28:04
+ * @LastEditTime: 2024-07-17 15:51:14
  * @Description: 描述
  */
 import "../style/editor.css";
@@ -204,7 +204,7 @@ export default function Editor() {
           }}
         >
           <div
-            className="absolute top-48px right-24px p-x-10px p-y-4px c-#fff b-1px b-solid b-#c174e8 bg-#c174e8  b-rd-2px  cursor-pointer hidden"
+            className="absolute top-48px right-24px p-x-10px p-y-4px c-#fff b-1px b-solid b-#c174e8 bg-#c174e8  b-rd-2px  cursor-pointer"
             onClick={async () => {
               let url: any = await createImage(editorRef.current);
               console.log(url);
