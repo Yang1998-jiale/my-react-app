@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:52:15
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-05 17:50:42
+ * @LastEditTime: 2024-07-22 16:40:52
  * @Description: 描述
  */
 const modules = import.meta.glob("./modules/**/*.tsx", { eager: true });
@@ -58,7 +58,7 @@ export default function Routers() {
   const routes = useRoutes([
     {
       path: "/",
-      element: <Navigate to={routers[0].path} />,
+      element: <Navigate to={'/battle/editor'} />,
     },
     ...routers,
     {

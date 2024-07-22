@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-18 15:52:33
  * @LastEditors: yjl
- * @LastEditTime: 2024-05-13 11:18:26
+ * @LastEditTime: 2024-07-22 16:40:38
  * @Description: 描述
  */
 import { lazy } from "react";
@@ -17,6 +17,7 @@ const home: any[] = [
     order: 1,
     meta: {
       title: "首页",
+      isShow: true, //是否显示
     },
   },
 ];
