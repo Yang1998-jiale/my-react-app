@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-10 09:15:11
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-27 10:49:00
+ * @LastEditTime: 2024-08-01 00:25:51
  * @Description: 描述
  */
 import { getBattleInfo } from "@/store/battle";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
-const maxUrl = baseURl + "tftstore/s11/624x318/";
+const maxUrl = baseURl + "tftstore/s12/624x318/";
 interface Props {
   info: any;
   type: string;
