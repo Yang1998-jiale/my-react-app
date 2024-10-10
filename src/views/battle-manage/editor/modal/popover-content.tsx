@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 const baseURl = import.meta.env.VITE_APP_BASE_URL;
-const maxUrl = baseURl + "tftstore/s11/624x318/";
+const maxUrl = baseURl + "tftstore/s12/624x318/";
 interface Props {
   info: any;
   type: string;

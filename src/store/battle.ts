@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-04-30 14:27:46
  * @LastEditors: yjl
- * @LastEditTime: 2024-06-28 14:01:42
+ * @LastEditTime: 2024-08-01 08:16:16
  * @Description: 描述
  */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
@@ -56,6 +56,10 @@ const battleSlice = createSlice({
       result.forEach((item: any) => {
         if (item.key === "hex" && !Array.isArray(item.value)) {
           state[item.key] = Object.values(item.value);
+        } else if (item.key === "equip") {
+          state[item.key] = item.value.filter((f) =>
+            !f.englishName.includes("11")
+          );
         } else {
           state[item.key] = item.value;
         }

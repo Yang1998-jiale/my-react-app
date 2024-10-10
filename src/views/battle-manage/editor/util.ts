@@ -2,7 +2,7 @@
  * @Author: yjl
  * @Date: 2024-05-29 10:43:48
  * @LastEditors: yjl
- * @LastEditTime: 2024-07-05 15:57:55
+ * @LastEditTime: 2024-08-09 18:35:24
  * @Description: 描述
  */
 import { createContext, useContext } from "react";
@@ -186,3 +186,4 @@ export function createAlternative(): Alternative {
     alternativeChess: [""],
   };
 }
+
